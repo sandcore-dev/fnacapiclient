@@ -9,9 +9,9 @@
 
 namespace FnacApiClient\Service\Response;
 
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-
+use ArrayObject;
 use FnacApiClient\Entity\Message;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 /**
  * MessageQueryResponse service base definition for response when using message query.
@@ -28,14 +28,14 @@ class MessageQueryResponse extends QueryResponse
     /**
      * {@inheritdoc}
      */
-    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
+    public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = array())
     {
         parent::denormalize($denormalizer, $data, $format);
 
         $this->messages_unread_result = isset($data['messages_unread_result']) ? $data['messages_unread_result'] : null;
         $this->messages_read_result = isset($data['messages_read_result']) ? $data['messages_read_result'] : null;
 
-        $this->messages = new \ArrayObject();
+        $this->messages = new ArrayObject();
 
         if (isset($data['message'])) {
             if (isset($data['message'][0])) {
@@ -55,9 +55,9 @@ class MessageQueryResponse extends QueryResponse
     /**
      * Message list
      *
-     * @see FnacApiClient\Entity\Message
+     * @see Message
      *
-     * @return Array<Message>
+     * @return ArrayObject<Message>
      */
     public function getMessages()
     {

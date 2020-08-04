@@ -9,10 +9,9 @@
 
 namespace FnacApiClient\Service\Response;
 
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
-
+use ArrayObject;
 use FnacApiClient\Entity\MessageUpdate;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 /**
  * MessageUpdateResponse service base definition for message update response
@@ -27,11 +26,11 @@ class MessageUpdateResponse extends ResponseService
     /**
      * {@inheritdoc}
      */
-    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
+    public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = array())
     {
         parent::denormalize($denormalizer, $data, $format);
 
-        $this->messages = new \ArrayObject();
+        $this->messages = new ArrayObject();
 
         if (isset($data['message'])) {
             if (isset($data['message'][0])) {
@@ -51,7 +50,7 @@ class MessageUpdateResponse extends ResponseService
     /**
      * Message updated list
      *
-     * @see FnacApiClient\Entity\MessageUpdate
+     * @see MessageUpdate
      *
      * @return ArrayObject<MessageUpdate>
      */

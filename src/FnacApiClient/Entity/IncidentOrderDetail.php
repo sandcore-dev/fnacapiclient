@@ -11,8 +11,6 @@ namespace FnacApiClient\Entity;
 
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 
 /**
  * IncidentOrderDetail definition.
@@ -20,7 +18,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
  * @author     Fnac
  * @version    1.0.0
  */
-
 class IncidentOrderDetail extends Entity
 {
     private $order_detail_id;
@@ -29,20 +26,19 @@ class IncidentOrderDetail extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $data = array();
         $data['order_detail_id'] = $this->order_detail_id;
         $data['refund_reason'] = $this->refund_reason;
 
         return $data;
-
     }
 
     /**
      * {@inheritDoc}
      */
-    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
+    public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = array())
     {
     }
 
@@ -57,7 +53,7 @@ class IncidentOrderDetail extends Entity
     /**
      * Set action to do on message
      *
-     * @see FnacApiClient\Type\IncidentRefundReasonType
+     * @see IncidentRefundReasonType
      *
      * @param string $refund_reason : refund reason to an order
      */

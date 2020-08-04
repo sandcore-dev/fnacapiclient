@@ -18,7 +18,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  * @author     Fnac
  * @version    1.0.0
  */
-
 class Address extends Entity
 {
     private $firstname;
@@ -34,15 +33,16 @@ class Address extends Entity
     private $mobile;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
 
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {

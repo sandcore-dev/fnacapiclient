@@ -11,7 +11,6 @@ namespace FnacApiClient\Entity;
 
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * ProductReference definition.
@@ -28,7 +27,7 @@ class ProductReference extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         return array(
             '@type' => $this->type, '#' => $this->value
@@ -37,6 +36,7 @@ class ProductReference extends Entity
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -47,7 +47,7 @@ class ProductReference extends Entity
     /**
      * Set product reference type
      *
-     * @see FnacApiClient\Type\ProductType
+     * @see ProductType
      *
      * @param string $type : Type of reference
      */
@@ -69,9 +69,7 @@ class ProductReference extends Entity
     /**
      * Get product reference type
      *
-     * @see FnacApiClient\Type\ProductType
-     *
-     * @param string $type : Type of reference
+     * @see ProductType
      */
     public function getType()
     {
@@ -80,8 +78,6 @@ class ProductReference extends Entity
 
     /**
      * Get product reference value
-     *
-     * @param string $value : Value of reference
      */
     public function getValue()
     {

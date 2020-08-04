@@ -11,7 +11,6 @@ namespace FnacApiClient\Entity;
 
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Promotion definition.
@@ -38,11 +37,12 @@ class Promotion extends Entity
     private $trigger_cart;
     private $trigger_promotion_code;
     private $trigger_customer_type;
+    private $sales_period_reference;
 
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $data['@type'] = $this->promotion_type;
         
@@ -87,6 +87,7 @@ class Promotion extends Entity
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -306,11 +307,10 @@ class Promotion extends Entity
     /**
      * Set promotion triggers settings
      *
-     * @return string
+     * @param string $triggers
      */
     public function setTriggers($triggers)
     {
         $this->triggers = $triggers;
     }
-    
 }

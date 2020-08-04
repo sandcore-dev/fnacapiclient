@@ -9,17 +9,17 @@
 
 namespace FnacApiClient\Client;
 
+use FnacApiClient\Service\Request\PricesQuery;
+use FnacApiClient\Service\Response\ResponseService;
+use Monolog\Logger;
+use FnacApiClient\Service\Request\RequestService;
+use FnacApiClient\Toolbox\StringObject;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
-
 use Zend\Http\Client as ZendClient;
-
-use FnacApiClient\Service\Request\RequestService;
-
-use Monolog\Logger;
-
-use FnacApiClient\Toolbox\StringObject;
+use Zend\Http\Client\Adapter\Curl;
 
 /**
  * Client connect to Fnac API Services.
@@ -33,26 +33,26 @@ class Client
 {
     const METHOD = 'POST';
     const ENCTYPE = 'text/xml';
-    const ADAPTER = 'Zend\Http\Client\Adapter\Curl';
+    const ADAPTER = Curl::class;
 
     /**
      * Serializer to convert xml to object and object to xml
      *
-     * @var Symfony\Component\Serializer\Serializer
+     * @var Serializer
      */
     private $serializer = null;
 
     /**
      * Client to communicate with a REST WebService
      *
-     * @var Zend\Http\Client
+     * @var ZendClient
      */
     private $streamClient = null;
 
     /**
      * Log object to output information, debug and error
      *
-     * @var Monolog\Logger
+     * @var Logger
      */
     protected $logger = null;
 
@@ -80,9 +80,9 @@ class Client
     /**
      * Create a new Client
      *
-     * @param Serializer $seriliazer : Serializer to convert xml to object or object to xml
+     * @param Serializer $serializer
      * @param ZendClient $streamClient : A client to send and receive from a rest webservice
-     * @param Logger $logger : A logger to log request and response, useful for debugging
+     * @param Logger|null $logger : A logger to log request and response, useful for debugging
      */
     public function __construct(Serializer $serializer, ZendClient $streamClient, Logger $logger = null)
     {
@@ -109,7 +109,7 @@ class Client
     /**
      * Return the rest webservice uri currently use
      *
-     * @return $uri Rest webservice uri
+     * @return string $uri Rest webservice uri
      */
     public function getUri()
     {
@@ -119,11 +119,11 @@ class Client
     /**
      * Return the rest webservice request that has been sent
      *
-     * @return $xml_request
+     * @return string $xml_request
      */
     public function getXmlRequest()
     {
-      return $this->xml_request;
+        return $this->xml_request;
     }
 
     /**
@@ -133,7 +133,7 @@ class Client
      */
     public function getXmlResponse()
     {
-      return $this->xml_response;
+        return $this->xml_response;
     }
 
 
@@ -153,7 +153,7 @@ class Client
     /**
      * Set logger to client
      *
-     * @param Logger $loger A logger to log request and response, useful for debugging
+     * @param Logger $logger
      */
     public function setLogger(Logger $logger)
     {
@@ -164,7 +164,9 @@ class Client
      * Call a service on Fnac REST WebServices
      *
      * @param RequestService $service The service to call
+     * @param bool $checkXML
      * @return ResponseService The service we expect to receive
+     * @throws ExceptionInterface
      */
     public function callService(RequestService $service, $checkXML = false)
     {
@@ -174,17 +176,14 @@ class Client
 
         $this->xml_request = $request;
 
-        //Cheking xml
-        if ($checkXML)
-        {
+        if ($checkXML) {
             $service->checkXML($request);
         }
 
         $response = $this->sendRequest($service, $request);
 
         $this->log(sprintf(" Service Request Response HEADER :\n%s", print_r($response->getHeaders(), true)), Logger::DEBUG);
-        if ($response->isClientError())
-        {
+        if ($response->isClientError()) {
             $this->log(sprintf(" Service Request Response ERROR : %s", $response->renderStatusLine()), Logger::ERROR);
             //throw new ErrorResponseException($response);
         }
@@ -193,11 +192,10 @@ class Client
 
         $classResponse = $service->getClassResponse();
         $this->log(sprintf(" Service Response Class  : %s", $classResponse), Logger::DEBUG);
-        
-        if(preg_match("/PricesQueryResponse$/", $classResponse)) {
+
+        if (preg_match("/PricesQueryResponse$/", $classResponse)) {
             $response_body = preg_replace('/(<\?xml[^?]+?)utf-16/i', '$1utf-8', $response->getBody());
-        }
-        else {
+        } else {
             $response_body = $response->getBody();
         }
 
@@ -205,16 +203,15 @@ class Client
         $this->xml_response = $response->getBody();
 
         $this->log(sprintf(" Service Response Data  :\n %s", serialize($data)), Logger::DEBUG);
-        $serviceResponse = $this->serializer->denormalize($data, $classResponse);
 
-        return $serviceResponse;
+        return $this->serializer->denormalize($data, $classResponse);
     }
 
     private function buildRequest($service)
     {
-
-        $encoder = new XmlEncoder();
-        $encoder->setRootNodeName($service->getServiceName());
+        $encoder = new XmlEncoder([
+            XmlEncoder::ROOT_NODE_NAME => $service->getServiceName(),
+        ]);
 
         $encoders = array('xml' => $encoder);
         $normalizers = array(new CustomNormalizer());
@@ -233,10 +230,9 @@ class Client
         $this->log(sprintf(" Service Request Data  : \n%s", StringObject::prettyXml($request)), Logger::INFO);
 
         //Define uri
-        if($service->getClassName() === "PricesQuery") { //Override pricing service name
-            $this->streamClient->setUri($this->getUri() . '/' . \FnacApiClient\Service\Request\PricesQuery::URL_NAME);
-        }
-        else {
+        if ($service->getClassName() === "PricesQuery") { //Override pricing service name
+            $this->streamClient->setUri($this->getUri() . '/' . PricesQuery::URL_NAME);
+        } else {
             $this->streamClient->setUri($this->getUri() . '/' . $service->getServiceName());
         }
         $this->log(sprintf(" Service Request URI  : %s", $this->getUri()), Logger::INFO);

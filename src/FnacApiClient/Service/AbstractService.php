@@ -9,6 +9,8 @@
 
 namespace FnacApiClient\Service;
 
+use LogicException;
+use ReflectionClass;
 use Symfony\Component\Serializer\Normalizer\DenormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
@@ -34,12 +36,12 @@ abstract class AbstractService implements NormalizableInterface, DenormalizableI
      */
     const ROOT_NAME = null;
 
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         // TODO: Implement normalize() method.
     }
 
-    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
+    public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = array())
     {
         // TODO: Implement denormalize() method.
     }
@@ -54,7 +56,7 @@ abstract class AbstractService implements NormalizableInterface, DenormalizableI
     final public function getServiceName()
     {        
         if (static::ROOT_NAME === null) {
-            throw new \LogicException(sprintf("Constant root name must be defined in class %s", get_class($this)));
+            throw new LogicException(sprintf("Constant root name must be defined in class %s", get_class($this)));
         }
         return static::ROOT_NAME;
     }
@@ -62,7 +64,7 @@ abstract class AbstractService implements NormalizableInterface, DenormalizableI
     
     final public function getClassName() {
         
-        $reflexion = new \ReflectionClass($this);
+        $reflexion = new ReflectionClass($this);
         return $reflexion->getShortName();
     }
 }

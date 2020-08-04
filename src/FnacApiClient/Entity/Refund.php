@@ -11,7 +11,6 @@ namespace FnacApiClient\Entity;
 
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Refund definition.
@@ -30,13 +29,14 @@ class Refund extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
 
     }
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -71,7 +71,7 @@ class Refund extends Entity
     }
 
     /**
-     * @return date
+     * @return string
      */
     public function getCreatedAt()
     {

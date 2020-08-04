@@ -9,6 +9,7 @@
 
 namespace FnacApiClient\Service\Request;
 
+use FnacApiClient\Service\Response\ShopInvoiceQueryResponse;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -22,12 +23,12 @@ class ShopInvoiceQuery extends Query
 {
     const ROOT_NAME = "shop_invoices_query";
     const XSD_FILE = "ShopInvoicesQueryService.xsd";
-    const CLASS_RESPONSE = "FnacApiClient\Service\Response\ShopInvoiceQueryResponse";
-    
+    const CLASS_RESPONSE = ShopInvoiceQueryResponse::class;
+
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         return parent::normalize($normalizer, $format);
     }

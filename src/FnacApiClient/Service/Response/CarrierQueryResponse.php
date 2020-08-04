@@ -9,10 +9,9 @@
 
 namespace FnacApiClient\Service\Response;
 
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
-
+use ArrayObject;
 use FnacApiClient\Entity\Carrier;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 /**
  * BatchQueryResponse service base definition for batch query response
@@ -27,11 +26,11 @@ class CarrierQueryResponse extends ResponseService
     /**
      * {@inheritdoc}
      */
-    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
+    public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = array())
     {
         parent::denormalize($denormalizer, $data, $format);
 
-        $this->carriers = new \ArrayObject();
+        $this->carriers = new ArrayObject();
         foreach ($data['carrier'] as $carrier) {
             $carrObj = new Carrier();
             $carrObj->denormalize($denormalizer, $carrier, $format);
@@ -42,9 +41,9 @@ class CarrierQueryResponse extends ResponseService
     /**
      * Carrier list
      *
-     * @see FnacApiClient\Entity\Carrier
+     * @see Carrier
      *
-     * @return ArrayObject<Carrier>
+     * @return array|ArrayObject<Carrier>
      */
     public function getCarriers()
     {

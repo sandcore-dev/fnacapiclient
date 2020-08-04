@@ -9,6 +9,7 @@
 
 namespace FnacApiClient\Service\Request;
 
+use FnacApiClient\Service\Response\BatchQueryResponse;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -22,12 +23,12 @@ class BatchQuery extends Query
 {
     const ROOT_NAME = "batch_query";
     const XSD_FILE = "BatchQueryService.xsd";
-    const CLASS_RESPONSE = "FnacApiClient\Service\Response\BatchQueryResponse";
+    const CLASS_RESPONSE = BatchQueryResponse::class;
 
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         return parent::normalize($normalizer, $format);
     }

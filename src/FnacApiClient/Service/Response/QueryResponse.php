@@ -10,7 +10,6 @@
 namespace FnacApiClient\Service\Response;
 
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * QueryResponse service base definition for query response
@@ -28,7 +27,7 @@ abstract class QueryResponse extends ResponseService
     /**
      * {@inheritdoc}
      */
-    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
+    public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = array())
     {
         parent::denormalize($denormalizer, $data);
 

@@ -17,11 +17,9 @@ namespace FnacApiClient\Type;
  */
 class TriggerCartType extends AbstractType
 {
-
     const MIN_SELLER_AMOUNT = "MinSellerAmount";
     const MIN_SELLER_QUANTITY = "MinSellerQuantity";
     const MIN_OFFER_QUANTITY = "MinOfferQuantity";
-
 
     protected static $validType = array(
         self::MIN_SELLER_AMOUNT,

@@ -11,7 +11,6 @@ namespace FnacApiClient\Entity;
 
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Represent a Shop invoice
@@ -29,13 +28,14 @@ class ShopInvoice extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
 
     }
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -67,7 +67,7 @@ class ShopInvoice extends Entity
    /**
     * Return invoice creation date
     *
-    * @return datetime
+    * @return string
     */
     public function getCreatedAt()
     {

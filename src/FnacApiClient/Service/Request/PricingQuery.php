@@ -9,10 +9,10 @@
 
 namespace FnacApiClient\Service\Request;
 
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
-
+use ArrayObject;
 use FnacApiClient\Entity\ProductReference;
+use FnacApiClient\Service\Response\PricingQueryResponse;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * PricingQuery Service's definition.
@@ -25,9 +25,10 @@ class PricingQuery extends Authentified
 {
     const ROOT_NAME = "pricing_query";
     const XSD_FILE = "PricingQueryService.xsd";
-    const CLASS_RESPONSE = "FnacApiClient\Service\Response\PricingQueryResponse";
+    const CLASS_RESPONSE = PricingQueryResponse::class;
 
     private $product_reference = null;
+    private $sellers;
 
     /**
      * {@inheritdoc}
@@ -36,13 +37,13 @@ class PricingQuery extends Authentified
     {
         parent::__construct($parameters);
 
-        $this->product_reference = new \ArrayObject();
+        $this->product_reference = new ArrayObject();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $data = parent::normalize($normalizer, $format);
 
@@ -66,7 +67,7 @@ class PricingQuery extends Authentified
     /**
      * Set seller's type
      *
-     * @see FnacApiClient\Type\SellerType
+     * @see SellerType
      *
      * @param string $sellers : Type of sellers (all, others)
      */

@@ -29,13 +29,14 @@ class Batch extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
 
     }
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -48,7 +49,7 @@ class Batch extends Entity
     /**
      * Get the batch status
      *
-     * @see FnacApiClient\Type\ResponseStatusType
+     * @see ResponseStatusType
      *
      * @return string
      */
@@ -80,7 +81,7 @@ class Batch extends Entity
     /**
      * Creation date of batch
      *
-     * @return date
+     * @return string
      */
     public function getCreatedAt()
     {

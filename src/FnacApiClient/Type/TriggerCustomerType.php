@@ -17,10 +17,8 @@ namespace FnacApiClient\Type;
  */
 class TriggerCustomerType extends AbstractType
 {
-
     const ALL = "all";
     const ADHERENT = "adherent";
-
 
     protected static $validType = array(
         self::ALL,

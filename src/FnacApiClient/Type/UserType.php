@@ -17,7 +17,6 @@ namespace FnacApiClient\Type;
  */
 class UserType extends AbstractType
 {
-
     /**
      * Incident created by call center
      */

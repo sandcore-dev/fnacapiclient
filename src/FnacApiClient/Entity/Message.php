@@ -9,12 +9,9 @@
 
 namespace FnacApiClient\Entity;
 
+use FnacApiClient\Type\MessageActionType;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
-
-use FnacApiClient\Type\MessageActionType;
 
 /**
  * Message definition.
@@ -22,7 +19,6 @@ use FnacApiClient\Type\MessageActionType;
  * @author     Fnac
  * @version    1.0.0
  */
-
 class Message extends Entity
 {
     /** Send Var **/
@@ -51,7 +47,7 @@ class Message extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $data = array();
 
@@ -77,6 +73,7 @@ class Message extends Entity
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -110,7 +107,7 @@ class Message extends Entity
     /**
      * Type of Referer : Order or Offer
      *
-     * @see FnacApiClient\Type\MessageType
+     * @see MessageType
      *
      * @return string
      */
@@ -132,7 +129,7 @@ class Message extends Entity
     /**
      * Sender's type
      *
-     * @see FnacApiClient\Type\MessageFromType
+     * @see MessageFromType
      *
      * @return string
      */
@@ -144,7 +141,7 @@ class Message extends Entity
     /**
      * Creation date of message
      *
-     * @return date
+     * @return string
      */
     public function getCreatedAt()
     {
@@ -154,7 +151,7 @@ class Message extends Entity
     /**
      * Last update date
      *
-     * @return date
+     * @return string
      */
     public function getUpdatedAt()
     {
@@ -164,7 +161,7 @@ class Message extends Entity
     /**
      * Is the message Read or Unread
      *
-     * @see FnacApiClient\Type\MessageStateType
+     * @see MessageStateType
      *
      * @return string
      */
@@ -176,7 +173,7 @@ class Message extends Entity
     /**
      * Is message archived or not
      *
-     * @see FnacApiClient\Type\BoolType
+     * @see BoolType
      *
      * @return string
      */
@@ -198,7 +195,7 @@ class Message extends Entity
     /**
      * Message's subject
      *
-     * @see FnacApiClient\Type\MessageSubjectType
+     * @see MessageSubjectType
      *
      * @return string
      */
@@ -220,7 +217,7 @@ class Message extends Entity
     /**
      * Set action to do on message
      *
-     * @see FnacApiClient\Type\MessageActionType
+     * @see MessageActionType
      *
      * @param string $action : Action to do on message
      */
@@ -242,7 +239,7 @@ class Message extends Entity
     /**
      * Set message subject
      *
-     * @see FnacApiClient\Type\MessageSubjectType
+     * @see MessageSubjectType
      *
      * @param string $message_subject : Subject for reply
      */
@@ -254,7 +251,7 @@ class Message extends Entity
     /**
      * Set to who we want to reply
      *
-     * @see FnacApiClient\Type\MessageToType
+     * @see MessageToType
      *
      * @param string $message_to : Person to reply
      */
@@ -276,7 +273,7 @@ class Message extends Entity
     /**
      * Set message's type
      *
-     * @see FnacApiClient\Type\MessageType;
+     * @see MessageType;
      *
      * @param string $message_type : Type of message
      */
@@ -308,7 +305,7 @@ class Message extends Entity
     /**
      * Message's anwser date
      *
-     * @return date
+     * @return string
      */
     public function getAnswerAt()
     {

@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection PhpUnusedPrivateFieldInspection */
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -9,9 +10,9 @@
 
 namespace FnacApiClient\Entity;
 
+use ArrayObject;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Order definition.
@@ -19,7 +20,6 @@ use Symfony\Component\Serializer\SerializerInterface;
  * @author     Fnac
  * @version    1.0.0
  */
-
 class Order extends Entity
 {
     private $order_id;
@@ -47,7 +47,7 @@ class Order extends Entity
      */
     public function __construct()
     {
-        $this->orders_detail = new \ArrayObject();
+        $this->orders_detail = new ArrayObject();
     }
 
     /**
@@ -73,7 +73,7 @@ class Order extends Entity
     /**
      * Set Group action type for order detail action
      *
-     * @see FnacApiClient\Type\OrderActionType
+     * @see OrderActionType
      *
      * @param string $order_action : Action to do on this order
      */
@@ -107,13 +107,13 @@ class Order extends Entity
      */
     public function clearOrdersDetail()
     {
-        $this->orders_detail = new \ArrayObject();
+        $this->orders_detail = new ArrayObject();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $data = array(
             '@order_id' => $this->order_id, '@action' => $this->order_action
@@ -133,6 +133,7 @@ class Order extends Entity
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -157,7 +158,7 @@ class Order extends Entity
         $this->order_culture = isset($data['order_culture']) ? $data['order_culture'] : "";
         $this->order_id = isset($data['order_id']) ? $data['order_id'] : "";
 
-        $this->orders_detail = new \ArrayObject();
+        $this->orders_detail = new ArrayObject();
 
         if (isset($data['order_detail'][0])) {
             foreach ($data['order_detail'] as $order_detail) {
@@ -245,7 +246,7 @@ class Order extends Entity
     /**
      * Order's state
      *
-     * @see FnacApiClient\Type\OrderStateType
+     * @see OrderStateType
      *
      * @return string
      */
@@ -257,7 +258,7 @@ class Order extends Entity
     /**
      * Order's creation date
      *
-     * @return date
+     * @return string
      */
     public function getCreatedAt()
     {

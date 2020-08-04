@@ -9,10 +9,9 @@
 
 namespace FnacApiClient\Entity;
 
+use ArrayObject;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 
 /**
  * OrderDetailIncident definition.
@@ -20,7 +19,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
  * @author     Fnac
  * @version    1.0.0
  */
-
 class OrderDetailIncident extends Entity
 {
     private $type;
@@ -33,13 +31,14 @@ class OrderDetailIncident extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
 
     }
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -48,7 +47,7 @@ class OrderDetailIncident extends Entity
         $this->created_at = $data['created_at'];
         $this->updated_at = $data['updated_at'];
 
-        $this->refunds = new \ArrayObject();
+        $this->refunds = new ArrayObject();
 
         if (isset($data['refunds']['refund'][0])) {
             foreach ($data['refunds']['refund'] as $refund) {
@@ -80,7 +79,7 @@ class OrderDetailIncident extends Entity
     }
 
     /**
-     * @return date
+     * @return string
      */
     public function getCreatedAt()
     {
@@ -88,7 +87,7 @@ class OrderDetailIncident extends Entity
     }
 
     /**
-     * @return date
+     * @return string
      */
     public function getUpdatedAt()
     {
@@ -96,7 +95,7 @@ class OrderDetailIncident extends Entity
     }
 
     /**
-     * @return ArrayObject<Refund>
+     * @return array|ArrayObject<Refund>
      */
     public function getRefunds()
     {

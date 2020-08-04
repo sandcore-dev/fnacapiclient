@@ -50,7 +50,7 @@ abstract class Query extends Authentified
      * Set period from which object to query has been created or updated
      *
      * @param array $date Period query Array formulation : array('type' => 'date type', 'min' => 'min date', 'max' => 'max_date')
-     * @see FnacApiClient\Type\DateType
+     * @see DateType
      * @return void
      */
     public function setDate(array $date)
@@ -63,7 +63,7 @@ abstract class Query extends Authentified
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $query = parent::normalize($normalizer, $format);
 

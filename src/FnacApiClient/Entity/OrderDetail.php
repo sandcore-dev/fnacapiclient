@@ -11,7 +11,6 @@ namespace FnacApiClient\Entity;
 
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * OrderDetail definition.
@@ -53,7 +52,7 @@ class OrderDetail extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $data = array(
             'action' => $this->action
@@ -76,6 +75,7 @@ class OrderDetail extends Entity
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -114,7 +114,7 @@ class OrderDetail extends Entity
     /**
      * Order detail state
      *
-     * @see FnacApiClient\Type\OrderDetailStateType
+     * @see OrderDetailStateType
      *
      * @return string
      */
@@ -176,7 +176,7 @@ class OrderDetail extends Entity
     /**
      * Product's state
      *
-     * @see FnacApiClient\Type\ProductStateType
+     * @see ProductStateType
      *
      * @return integer
      */
@@ -188,7 +188,7 @@ class OrderDetail extends Entity
     /**
      * Product state label
      *
-     * @see FnacApiClient\Type\ProductStateType
+     * @see ProductStateType
      *
      * @return string
      */
@@ -280,7 +280,7 @@ class OrderDetail extends Entity
     /**
      * Creation date of order detail
      *
-     * @return date
+     * @return string
      */
     public function getCreatedAt()
     {
@@ -290,7 +290,7 @@ class OrderDetail extends Entity
     /**
      * Debited date of order detail
      *
-     * @return date
+     * @return string
      */
     public function getDebitedAt()
     {
@@ -300,7 +300,7 @@ class OrderDetail extends Entity
     /**
      * Received date of order detail
      *
-     * @return date
+     * @return string
      */
     public function getReceivedAt()
     {
@@ -330,7 +330,7 @@ class OrderDetail extends Entity
     /**
      * Set the specific action to do on this order detail depdending on order action group
      *
-     * @see FnacApiClient\Type\OrderDetailActionType
+     * @see OrderDetailActionType
      *
      * @param string $action : Action to do on this order detail
      */

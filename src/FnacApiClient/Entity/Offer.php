@@ -9,11 +9,10 @@
 
 namespace FnacApiClient\Entity;
 
+use FnacApiClient\Type\ProductType;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
-use FnacApiClient\Type\ProductType;
 
 /**
  * Offer definition.
@@ -71,7 +70,7 @@ class Offer extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $data = array();
 
@@ -128,6 +127,7 @@ class Offer extends Entity
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -173,7 +173,7 @@ class Offer extends Entity
     /**
      * Set product's reference type
      *
-     * @see FnacApiClient\Type\ProductType
+     * @see ProductType
      *
      * @param string $product_reference_type : Type of product reference
      */
@@ -195,7 +195,7 @@ class Offer extends Entity
     /**
      * Set offer's reference type
      *
-     * @see FnacApiClient\Type\OfferReferenceType
+     * @see OfferReferenceType
      *
      * @param string $offer_reference_type : Type of offer reference
      */
@@ -277,7 +277,7 @@ class Offer extends Entity
     /**
      * Set offer's position in shop's showcase
      *
-     * @param unsigned integer $showcase Offer's position in shop's showcase
+     * @param integer $showcase Offer's position in shop's showcase
      */
     public function setShowcase($showcase)
     {
@@ -287,7 +287,7 @@ class Offer extends Entity
     /**
      * Set treatment to do on offer
      *
-     * @see FnacApiClient\Type\OfferTreatmentType
+     * @see OfferTreatmentType
      *
      * @param string $treatment
      */
@@ -379,7 +379,7 @@ class Offer extends Entity
     /**
      * Product state in this offer
      *
-     * @see FnacApiClient\Type\ProductStateType
+     * @see ProductStateType
      *
      * @return integer
      */
@@ -391,7 +391,7 @@ class Offer extends Entity
     /**
      * Product state label
      *
-     * @see FnacApiClient\Type\ProductStateType
+     * @see ProductStateType
      *
      * @return string
      */

@@ -9,8 +9,10 @@
 
 namespace FnacApiClient\Service\Request;
 
+use ArrayObject;
+use FnacApiClient\Service\Response\OrderQueryResponse;
+use FnacApiClient\Type\ProductStateType;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * OrderQuery Service's definition.
@@ -18,12 +20,11 @@ use Symfony\Component\Serializer\SerializerInterface;
  * @author     Fnac
  * @version    1.0.0
  */
-
 class OrderQuery extends Query
 {
     const ROOT_NAME = "orders_query";
     const XSD_FILE = "OrdersQueryService.xsd";
-    const CLASS_RESPONSE = "FnacApiClient\Service\Response\OrderQueryResponse";
+    const CLASS_RESPONSE = OrderQueryResponse::class;
 
     private $sort_by_type = null;
     private $product_fnac_id = null;
@@ -32,7 +33,8 @@ class OrderQuery extends Query
     private $offer_fnac_id = null;
     private $offer_seller_id = null;
 
-    
+
+    /** @noinspection PhpMissingParentConstructorInspection */
     public function __construct(array $orderQueryParameters = null)
     {
         if (!empty($orderQueryParameters)) {
@@ -43,7 +45,7 @@ class OrderQuery extends Query
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $data = parent::normalize($normalizer, $format);
 
@@ -52,7 +54,7 @@ class OrderQuery extends Query
         }
 
         if (!is_null($this->product_fnac_id)) {
-            $data['product_fnad_id'] = $this->product_fnad_id;
+            $data['product_fnac_id'] = $this->product_fnac_id;
         }
 
         if (!is_null($this->orders_fnac_id)) {
@@ -86,7 +88,7 @@ class OrderQuery extends Query
     /**
      * Set order to sort
      *
-     * @see FnacApiClient\Type\SortOrderType
+     * @see SortOrderType
      *
      * @param string $sort_by_type : Order to sort
      */
@@ -118,7 +120,7 @@ class OrderQuery extends Query
     /**
      * Set orders states
      *
-     * @see FnacApiClient\Type\ProductStateType
+     * @see ProductStateType
      *
      * @param ArrayObject<ProductStateType> $states : Offer states
      */

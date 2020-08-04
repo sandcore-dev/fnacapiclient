@@ -1,4 +1,7 @@
 <?php
+
+namespace FnacApiClient\Service\Request;
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -7,8 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace FnacApiClient\Service\Request;
-
+use FnacApiClient\Service\Response\MessageQueryResponse;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -22,7 +24,7 @@ class MessageQuery extends Query
 {
     const ROOT_NAME = "messages_query";
     const XSD_FILE = "MessagesQueryService.xsd";
-    const CLASS_RESPONSE = "FnacApiClient\Service\Response\MessageQueryResponse";
+    const CLASS_RESPONSE = MessageQueryResponse::class;
 
     private $message_type;
     private $message_state;
@@ -37,7 +39,7 @@ class MessageQuery extends Query
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $data = parent::normalize($normalizer, $format);
 
@@ -81,7 +83,7 @@ class MessageQuery extends Query
      * Set message's type
      *
      * @param string $message_type : Type of message
-     * @see FnacApicClient\Type\MessageType
+     * @see MessageType
      */
     public function setMessageType($message_type)
     {
@@ -92,7 +94,7 @@ class MessageQuery extends Query
      * Set message's state
      *
      * @param string $message_state : State of message
-     * @see FnacApicClient\Type\MessageStateType
+     * @see MessageStateType
      */
     public function setMessageState($message_state)
     {
@@ -103,7 +105,7 @@ class MessageQuery extends Query
      * Set if message is archived or not
      *
      * @param string $message_archived : Is message archived or not ?
-     * @see FnacApicClient\Type\BoolType
+     * @see BoolType
      */
     public function setMessageArchived($message_archived)
     {
@@ -154,7 +156,7 @@ class MessageQuery extends Query
      * Set field on which we want the sort
      *
      * @param string $sort_by : Field to sort by
-     * @see FnacApicClient\Type\SortType
+     * @see SortType
      */
     public function setSortBy($sort_by)
     {
@@ -165,7 +167,7 @@ class MessageQuery extends Query
      * Set the sort order
      *
      * @param string $sort_by_type : Order to sort (ASC or DESC)
-     * @see FnacApicClient\Type\SortOrderType
+     * @see SortOrderType
      */
     public function setSortByType($sort_by_type)
     {

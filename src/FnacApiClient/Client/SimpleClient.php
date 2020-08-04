@@ -9,18 +9,18 @@
 
 namespace FnacApiClient\Client;
 
-
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
-
-use Zend\Http\Client as ZendClient;
-
+use Exception;
+use FnacApiClient\Exception\FileNotFoundException;
 use FnacApiClient\Service\Request\RequestService;
 use FnacApiClient\Exception\ErrorResponseException;
 use FnacApiClient\Configuration\Configuration;
-use FnacApiClient\Service\Request\Authentified;
 use FnacApiClient\Service\Request\Authentification;
+use FnacApiClient\Service\Response\ResponseService;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
+use Zend\Http\Client as ZendClient;
 
 /**
  * SimpleClient connect to Fnac REST WebServices using default object and configuration.
@@ -58,7 +58,7 @@ class SimpleClient extends Client
         $this->shop_id = $shop_id;
         $this->partner_id = $partner_id;
         $this->key = $key;
-        
+
         $serializer = new Serializer(array(new CustomNormalizer()), array(new XmlEncoder()));
 
         $zendClient = new ZendClient();
@@ -82,6 +82,7 @@ class SimpleClient extends Client
      * </pre>
      *
      * @param mixed $parameters
+     * @throws FileNotFoundException
      */
     public function init($parameters)
     {
@@ -99,8 +100,11 @@ class SimpleClient extends Client
     /**
      * Call a service on fnac rest webservice
      *
-     * @param Authentified $service : Service to call
-     * @return FnacApiClient\Service\ResponseService
+     * @param RequestService $service : Service to call
+     * @param bool $checkXML
+     * @return ResponseService
+     * @throws ErrorResponseException
+     * @throws ExceptionInterface
      */
     public function callService(RequestService $service, $checkXML = false)
     {
@@ -109,8 +113,7 @@ class SimpleClient extends Client
             $service->initAuth($this->shop_id, $this->partner_id, $this->token->getToken());
 
             return parent::callService($service);
-        }
-        catch(\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -118,48 +121,49 @@ class SimpleClient extends Client
     /**
      * Check if we are authentified to fnac rest webservice using Authentification Service
      *
-     * @return boolean
+     * @return void
+     * @throws ErrorResponseException
+     * @throws ExceptionInterface
      */
     public function checkAuth()
     {
-      try {
-        if ($this->token === null) {
-          $this->token = parent::callService(new Authentification($this->shop_id, $this->partner_id, $this->key));
+        try {
+            if ($this->token === null) {
+                $this->token = parent::callService(new Authentification($this->shop_id, $this->partner_id, $this->key));
+            }
+
+            $i = 0;
+            while (!$this->token->isValid()) {
+                $this->token = parent::callService(new Authentification($this->shop_id, $this->partner_id, $this->key));
+                $i++;
+                if ($i > 50) {
+                    throw new Exception("Error token unvalid for more than 50 times in a row, check if your system is at the right time");
+                }
+            }
+        } catch (ErrorResponseException $e) {
+            $this->token = null;
+            throw $e;
         }
-        
-        $i = 0;
-        while (!$this->token->isValid()) {
-          $this->token = parent::callService(new Authentification($this->shop_id, $this->partner_id, $this->key));
-          $i++;
-          if ($i > 50) {
-            throw new \Exception("Error token unvalid for more than 50 times in a row, check if your system is at the right time");
-          }
-        }
-      }
-      catch (ErrorResponseException $e) {
-        $this->token = null;
-        throw $e;
-      }
     }
 
-  public function getShopId()
+    public function getShopId()
     {
-      return $this->shop_id;
+        return $this->shop_id;
     }
 
     public function getPartnerId()
     {
-      return $this->partner_id;
+        return $this->partner_id;
     }
 
     public function getKey()
     {
-      return $this->key;
+        return $this->key;
     }
 
     public function getToken()
     {
-      return $this->token;
+        return $this->token;
     }
 
 }

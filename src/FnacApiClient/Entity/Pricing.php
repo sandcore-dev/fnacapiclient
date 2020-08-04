@@ -18,7 +18,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  * @author     Fnac
  * @version    1.0.0
  */
-
 class Pricing extends Entity
 {
     private $seller;
@@ -33,13 +32,14 @@ class Pricing extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
 
     }
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -86,7 +86,7 @@ class Pricing extends Entity
     /**
      * Product state type for this pricing
      *
-     * @see FnacApiClient\Type\ProductStateType
+     * @see ProductStateType
      *
      * @return integer
      */
@@ -128,7 +128,7 @@ class Pricing extends Entity
     /**
      * Product seller type
      *
-     * @see FnacApiClient\Type\SellerType
+     * @see SellerType
      *
      * @return string
      */

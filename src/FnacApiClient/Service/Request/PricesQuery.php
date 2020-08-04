@@ -9,8 +9,9 @@
 
 namespace FnacApiClient\Service\Request;
 
+use ArrayObject;
+use FnacApiClient\Service\Response\PricesQueryResponse;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 use FnacApiClient\Entity\ProductReference;
 
@@ -26,9 +27,12 @@ class PricesQuery extends Authentified
     const ROOT_NAME = "pricing_query";
     const URL_NAME = "prices_query";
     const XSD_FILE = "PricesQueryService.xsd";
-    const CLASS_RESPONSE = "FnacApiClient\Service\Response\PricesQueryResponse";
+    const CLASS_RESPONSE = PricesQueryResponse::class;
 
     private $product_reference = null;
+    private $prices;
+    private $sellers;
+    private $states;
 
     /**
      * {@inheritdoc}
@@ -37,13 +41,13 @@ class PricesQuery extends Authentified
     {
         parent::__construct($parameters);
 
-        $this->product_reference = new \ArrayObject();
+        $this->product_reference = new ArrayObject();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $data = parent::normalize($normalizer, $format);
 
@@ -75,7 +79,7 @@ class PricesQuery extends Authentified
     /**
      * Set seller's type
      *
-     * @see FnacApiClient\Type\SellerType
+     * @see SellerType
      *
      * @param string $sellers : Type of sellers (all, others)
      */
@@ -87,7 +91,7 @@ class PricesQuery extends Authentified
     /**
      * Set product states filter
      *
-     * @see FnacApiClient\Type\PricingProductStateType
+     * @see PricingProductStateType
      *
      * @param string $states : state of products to retrieve
      */
@@ -99,7 +103,7 @@ class PricesQuery extends Authentified
     /**
      * Set prices type filter
      *
-     * @see FnacApiClient\Type\PriceType
+     * @see PriceType
      *
      * @param string $prices : prices type to retrieve
      */

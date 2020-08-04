@@ -9,13 +9,10 @@
 
 namespace FnacApiClient\Entity;
 
+use ArrayObject;
+use FnacApiClient\Type\IncidentUpdateActionType;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
-
-use FnacApiClient\Entity\IncidentOrderDetail;
-use FnacApiClient\Type\IncidentUpdateActionType;
 
 /**
  * IncidentOrder definition.
@@ -23,7 +20,6 @@ use FnacApiClient\Type\IncidentUpdateActionType;
  * @author     Fnac
  * @version    1.0.0
  */
-
 class IncidentOrder extends Entity
 {
 
@@ -40,13 +36,13 @@ class IncidentOrder extends Entity
      */
     public function __construct()
     {
-        $this->orders_details_incident = new \ArrayObject();
+        $this->orders_details_incident = new ArrayObject();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $data = array();
 
@@ -92,7 +88,7 @@ class IncidentOrder extends Entity
     }
 
     /**
-     * @param string $opened_by : Who have create this incident
+     * @param string $order_id
      */
     public function setOrderId($order_id)
     {
@@ -110,7 +106,7 @@ class IncidentOrder extends Entity
     /**
      * Set action to do on incident
      *
-     * @see FnacApiClient\Type\IncidentUpdateActionType
+     * @see IncidentUpdateActionType
      *
      * @param string $action : Action to do on order
      */
@@ -122,7 +118,7 @@ class IncidentOrder extends Entity
     /**
      * Add an orderDetail assocaited to an order
      *
-     * @see FnacApiClient\Entity\IncidentOrderDetail
+     * @see IncidentOrderDetail
      *
      * @param IncidentOrderDetail $order_detail : OrderDetail request for Incident
      */
@@ -136,7 +132,7 @@ class IncidentOrder extends Entity
      *
      * @param ArrayObject $order_details : IncidentOrderDetails request for Incident
      */
-    public function addOrderDetails(\ArrayObject $order_details)
+    public function addOrderDetails(ArrayObject $order_details)
     {
         if (is_array($this->orders_details_incident)) {
             $this->orders_details_incident = array_merge($this->orders_details_incident, $order_details);

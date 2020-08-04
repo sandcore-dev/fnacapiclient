@@ -9,6 +9,9 @@
 
 namespace FnacApiClient\Configuration;
 
+use ArrayAccess;
+use LogicException;
+use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 use FnacApiClient\Exception\FileNotFoundException;
 
@@ -19,7 +22,7 @@ use FnacApiClient\Exception\FileNotFoundException;
  * @author     Fnac
  * @version    1.0.0
  */
-class Configuration implements \ArrayAccess
+class Configuration implements ArrayAccess
 {
     CONST CLIENT_CONFIG = 'fnac_api_client';
     CONST HTTP_CLIENT = 'fnac_http_client';
@@ -68,17 +71,18 @@ class Configuration implements \ArrayAccess
     public function __construct($config_path)
     {
         $this->config_path = $config_path;
-        $this->config = Yaml::parse($this->config_path);
 
-        if ($this->config === $this->config_path) {
-            throw new FileNotFoundException(sprintf("The file at %s does not exist", $config_path));
+        try {
+            $this->config = Yaml::parse(file_get_contents($this->config_path));
+        } catch (ParseException $e) {
+            throw new FileNotFoundException(sprintf("The file at %s does not exist or is not valid", $config_path));
         }
 
         $config_client = $this->config[self::CLIENT_CONFIG];
 
         /** we must have client_config **/
         if (empty($config_client) || empty($config_client['key']) || empty($config_client['shop_id']) || empty($config_client['partner_id']) || empty($config_client['host'])) {
-            throw new \LogicException(sprintf("The file at %s does not contain any configuration element, please check your file.", $config_path));
+            throw new LogicException(sprintf("The file at %s does not contain any configuration element, please check your file.", $config_path));
         }
 
     }

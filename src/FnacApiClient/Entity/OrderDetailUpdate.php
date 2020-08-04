@@ -9,6 +9,7 @@
 
 namespace FnacApiClient\Entity;
 
+use ArrayObject;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -18,7 +19,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  * @author     Fnac
  * @version    1.0.0
  */
-
 class OrderDetailUpdate extends Entity
 {
     private $order_detail_id;
@@ -29,13 +29,14 @@ class OrderDetailUpdate extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
 
     }
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -43,7 +44,7 @@ class OrderDetailUpdate extends Entity
         $this->status = $data['status'];
         $this->state = isset($data['state']) ? $data['state'] : "";
 
-        $this->errors = new \ArrayObject();
+        $this->errors = new ArrayObject();
 
         if (isset($data['error'])) {
             if (isset($data['error'][0])) {
@@ -73,7 +74,7 @@ class OrderDetailUpdate extends Entity
     /**
      * Order detail state
      *
-     * @see FnacApiClient\Type\OrderDetailStateType
+     * @see OrderDetailStateType
      *
      * @return string
      */
@@ -85,7 +86,7 @@ class OrderDetailUpdate extends Entity
     /**
      * Order detail update status
      *
-     * @see FnacApiClient\Type\ResponseStatusType
+     * @see ResponseStatusType
      *
      * @return string
      */

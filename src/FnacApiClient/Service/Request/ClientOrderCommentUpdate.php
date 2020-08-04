@@ -9,6 +9,8 @@
 
 namespace FnacApiClient\Service\Request;
 
+use ArrayObject;
+use FnacApiClient\Service\Response\ClientOrderCommentUpdateResponse;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use FnacApiClient\Entity\Comment;
 
@@ -18,12 +20,11 @@ use FnacApiClient\Entity\Comment;
  * @author     Fnac
  * @version    1.0.0
  */
-
 class ClientOrderCommentUpdate extends Authentified
 {
     const ROOT_NAME = "client_order_comments_update";
     const XSD_FILE = "ClientOrderCommentsUpdateService.xsd";
-    const CLASS_RESPONSE = "FnacApiClient\Service\Response\ClientOrderCommentUpdateResponse";
+    const CLASS_RESPONSE = ClientOrderCommentUpdateResponse::class;
 
     private $comments;
 
@@ -34,13 +35,13 @@ class ClientOrderCommentUpdate extends Authentified
     {
         parent::__construct($parameters);
 
-        $this->comments = new \ArrayObject();
+        $this->comments = new ArrayObject();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $data = parent::normalize($normalizer, $format);
 

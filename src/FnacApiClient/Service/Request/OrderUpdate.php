@@ -9,8 +9,9 @@
 
 namespace FnacApiClient\Service\Request;
 
+use ArrayObject;
+use FnacApiClient\Service\Response\OrderUpdateResponse;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 use FnacApiClient\Entity\Order;
 
@@ -25,7 +26,7 @@ class OrderUpdate extends Authentified
 {
     const ROOT_NAME = "orders_update";
     const XSD_FILE = "OrdersUpdateService.xsd";
-    const CLASS_RESPONSE = "FnacApiClient\Service\Response\OrderUpdateResponse";
+    const CLASS_RESPONSE = OrderUpdateResponse::class;
 
     private $orders = array();
 
@@ -36,13 +37,13 @@ class OrderUpdate extends Authentified
     {
         parent::__construct($parameters);
 
-        $this->orders = new \ArrayObject();
+        $this->orders = new ArrayObject();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $data = parent::normalize($normalizer, $format);
 

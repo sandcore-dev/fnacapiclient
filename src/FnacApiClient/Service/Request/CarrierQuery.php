@@ -9,6 +9,7 @@
 
 namespace FnacApiClient\Service\Request;
 
+use FnacApiClient\Service\Response\CarrierQueryResponse;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -22,12 +23,12 @@ class CarrierQuery extends Authentified
 {
     const ROOT_NAME = "carriers_query";
     const XSD_FILE = "CarriersQueryService.xsd";
-    const CLASS_RESPONSE = "FnacApiClient\Service\Response\CarrierQueryResponse";
+    const CLASS_RESPONSE = CarrierQueryResponse::class;
 
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         return array_merge(parent::normalize($normalizer, $format), array(
             'query' => 'all'

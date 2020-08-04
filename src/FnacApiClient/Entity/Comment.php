@@ -9,6 +9,7 @@
 
 namespace FnacApiClient\Entity;
 
+use ArrayObject;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -34,7 +35,7 @@ class Comment extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         return array(
             '@id' => $this->id, 'comment_reply' => $this->reply
@@ -43,13 +44,14 @@ class Comment extends Entity
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
         $this->id = $data['@id'];
         $this->status = $data['@status'];
 
-        $this->errors = new \ArrayObject();
+        $this->errors = new ArrayObject();
 
         if (isset($data['error'])) {
             if (isset($data['error'][0])) {
@@ -109,7 +111,7 @@ class Comment extends Entity
     /**
      * Return a list of error
      *
-     * @return ArrayObject<Error>
+     * @return ArrayObject
      */
     public function getErrors()
     {

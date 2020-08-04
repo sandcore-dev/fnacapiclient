@@ -8,6 +8,7 @@
  */
 namespace FnacApiClient\Service\Request;
 
+use FnacApiClient\Service\Response\OfferQueryResponse;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -43,7 +44,7 @@ class OfferQuery extends Query
 {
     const XSD_FILE = "OffersQueryService.xsd";
     const ROOT_NAME = "offers_query";
-    const CLASS_RESPONSE = "FnacApiClient\Service\Response\OfferQueryResponse";
+    const CLASS_RESPONSE = OfferQueryResponse::class;
 
     protected $offer_fnac_id = null;
     protected $product_fnac_id = null;
@@ -114,6 +115,7 @@ class OfferQuery extends Query
     
     /**
      * {@inheritdoc}
+     * @noinspection PhpMissingParentConstructorInspection
      */
     public function __construct(array $offerQueryParameters = null)
     {
@@ -125,7 +127,7 @@ class OfferQuery extends Query
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         $query = parent::normalize($normalizer, $format);
 

@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
  */
 class DebugResponse extends ResponseService
 {
-    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
+    public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = array())
     {
         print_r($data);
     }

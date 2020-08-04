@@ -9,6 +9,8 @@
 
 namespace FnacApiClient\Toolbox;
 
+use DomDocument;
+
 /**
  * Class to handle some string functions
  *
@@ -25,7 +27,10 @@ class StringObject
     public static function fromCamelCase($str)
     {
         $str[0] = strtolower($str[0]);
-        $func = create_function('$c', 'return "_" . strtolower($c[1]);');
+
+        $func = function ($c) {
+            return "_" . strtolower($c[1]);
+        };
 
         return preg_replace_callback('/([A-Z])/', $func, $str);
     }
@@ -41,7 +46,10 @@ class StringObject
         if ($capitalise_first_char) {
             $str[0] = strtoupper($str[0]);
         }
-        $func = create_function('$c', 'return strtoupper($c[1]);');
+
+        $func = function ($c) {
+            return strtoupper($c[1]);
+        };
 
         return preg_replace_callback('/_([a-z])/', $func, $str);
     }
@@ -55,9 +63,10 @@ class StringObject
      */
     public static function prettyXml($xml)
     {
-        $dom = new \DomDocument;
+        $dom = new DomDocument;
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
+
         if (!@$dom->loadXML($xml)) {
             return $xml;
         }

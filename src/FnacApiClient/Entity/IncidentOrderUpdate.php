@@ -9,6 +9,7 @@
 
 namespace FnacApiClient\Entity;
 
+use ArrayObject;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -34,13 +35,14 @@ class IncidentOrderUpdate extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
 
     }
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -60,7 +62,7 @@ class IncidentOrderUpdate extends Entity
             $this->state = $data['state'];
         }
 
-        $this->errors = new \ArrayObject();
+        $this->errors = new ArrayObject();
 
         if (isset($data['error'])) {
             if (isset($data['error'][0])) {
@@ -76,7 +78,7 @@ class IncidentOrderUpdate extends Entity
             }
         }
 
-        $this->order_details = new \ArrayObject();
+        $this->order_details = new ArrayObject();
 
         if (isset($data['order_detail'])) {
             if (isset($data['order_detail'][0])) {
@@ -117,7 +119,7 @@ class IncidentOrderUpdate extends Entity
     /**
      * Incident's status
      *
-     * @see FnacApiClient\Type\StatusType
+     * @see StatusType
      * @return string
      */
     public function getIncidentStatus()
@@ -128,7 +130,7 @@ class IncidentOrderUpdate extends Entity
     /**
      * Status of update
      *
-     * @see FnacApiClient\Type\ResponseStatusType
+     * @see ResponseStatusType
      *
      * @return string
      */
@@ -140,7 +142,7 @@ class IncidentOrderUpdate extends Entity
     /**
      * Incident's State
      *
-     * @see FnacApiClient\Type\OrderStateType
+     * @see OrderStateType
      *
      * @return string
      */
@@ -152,7 +154,7 @@ class IncidentOrderUpdate extends Entity
     /**
      * Errors that happens during update
      *
-     * @see FnacApiClient\Entity\IncidentOrderDetailUpdate
+     * @see IncidentOrderDetailUpdate
      *
      * @return ArrayObject<IncidentOrderDetailUpdate>
      */

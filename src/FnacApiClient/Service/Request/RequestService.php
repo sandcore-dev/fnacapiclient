@@ -9,10 +9,13 @@
 
 namespace FnacApiClient\Service\Request;
 
+use BadMethodCallException;
+use DOMDocument;
+use Exception;
 use FnacApiClient\Service\AbstractService;
+use LogicException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 use FnacApiClient\Toolbox\StringObject;
 
 /**
@@ -29,13 +32,13 @@ abstract class RequestService extends AbstractService
     /**
      * Create service with supplied parameters
      *
-     * Paremeters key are class setter transform from camel case to undescore string (@see FnacApiClient\Toolbox\StringObject )
+     * Paremeters key are class setter transform from camel case to undescore string (@see StringObject )
      * Example :
      * setOrderFnacId(1) => array('order_fnac_id' => 1)
      *
      * This allow you to set parameters in the way you want
      *
-     * @param array $parameters Parmeters list
+     * @param array|null $parameters Parameters list
      */
     public function __construct(array $parameters = null)
     {
@@ -47,7 +50,7 @@ abstract class RequestService extends AbstractService
     /**
      * {@inheritdoc}
      */
-    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
+    public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = array())
     {
         throw new BadMethodCallException("Can't denormalize a Request Service");
     }
@@ -60,11 +63,11 @@ abstract class RequestService extends AbstractService
     final public function getClassResponse()
     {
         if (static::CLASS_RESPONSE === null) {
-            throw new \LogicException(sprintf("Excepted reponse must be defined in %s", get_class($this)));
+            throw new LogicException(sprintf("Excepted reponse must be defined in %s", get_class($this)));
         }
 
         if (is_subclass_of(static::CLASS_RESPONSE, 'ResponseService')) {
-            throw new \LogicException(sprintf("Reponse class %s must be a sub class of ReponseService", static::CLASS_RESPONSE));
+            throw new LogicException(sprintf("Reponse class %s must be a sub class of ReponseService", static::CLASS_RESPONSE));
         }
         return static::CLASS_RESPONSE;
     }
@@ -74,20 +77,21 @@ abstract class RequestService extends AbstractService
      *
      * @param string $xml Xml generated
      * @return boolean
+     * @throws Exception
      */
     final public function checkXML($xml)
     {
         if (static::XSD_FILE === null) {
-            throw new \LogicException(sprintf("XSD file must be defined in %s", get_class($this)));
+            throw new LogicException(sprintf("XSD file must be defined in %s", get_class($this)));
         }
 
         $xsdPath = __DIR__ . '/../../Resources/xsd/' . static::XSD_FILE;
 
         if (!file_exists($xsdPath)) {
-            throw new \LogicException(sprintf("XSD file %s doesn't exist", $xsdPath));
+            throw new LogicException(sprintf("XSD file %s doesn't exist", $xsdPath));
         }
 
-        $doc = new \DOMDocument();
+        $doc = new DOMDocument();
         $doc->loadXML($xml);
 
         libxml_use_internal_errors(true);
@@ -95,7 +99,7 @@ abstract class RequestService extends AbstractService
         if (!$doc->schemaValidate($xsdPath)) {
             $errorList = libxml_get_errors();
             libxml_clear_errors();
-            throw new \Exception(sprintf("Errors when validating the xml document : %s", print_r($errorList, true)));
+            throw new Exception(sprintf("Errors when validating the xml document : %s", print_r($errorList, true)));
         }
 
         return true;
@@ -104,7 +108,7 @@ abstract class RequestService extends AbstractService
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         return array(
             '@xmlns' => static::FNAC_XMLNS
@@ -114,11 +118,11 @@ abstract class RequestService extends AbstractService
     /**
      * Convert parameter from array to set method
      *
-     * Paremeters key are class setter transform from camel case to undescore string (@see FnacApiClient\Toolbox\StringObject )
+     * Paremeters key are class setter transform from camel case to undescore string (@see \FnacApiClient\Toolbox\StringObject )
      * Example :
      * setOrderFnacId(1) => array('order_fnac_id' => 1)
      *
-     * @param Array $parameters : List of parameter where key is the method name and value the data to set.
+     * @param array $parameters : List of parameter where key is the method name and value the data to set.
      */
     public function initParameters(array $parameters)
     {

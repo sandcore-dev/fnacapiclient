@@ -9,10 +9,9 @@
 
 namespace FnacApiClient\Entity;
 
+use ArrayObject;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 
 /**
  * OrderDetailIncident definition.
@@ -20,24 +19,26 @@ use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
  * @author     Fnac
  * @version    1.0.0
  */
-
 class IncidentOrderDetailUpdate extends Entity
 {
     private $order_detail_id;
     private $status;
     private $state;
     private $errors;
+    private $type;
+    private $created_at;
 
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
 
     }
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -45,7 +46,7 @@ class IncidentOrderDetailUpdate extends Entity
         $this->status = $data['status'];
         $this->created_at = isset($data['state']) ? $data['state'] : null;
 
-        $this->errors = new \ArrayObject();
+        $this->errors = new ArrayObject();
 
         if (isset($data['error'][0])) {
             foreach ($data['error'] as $error) {
@@ -69,9 +70,9 @@ class IncidentOrderDetailUpdate extends Entity
     }
 
     /**
-     * @see  FnacApiClient\Type\OrderDetailStateType
-     *
      * @return string state of the orderDetail
+     * @see  OrderDetailStateType
+     *
      */
     public function getState()
     {
@@ -79,9 +80,9 @@ class IncidentOrderDetailUpdate extends Entity
     }
 
     /**
-     * @see  FnacApiClient\Type\ResponseStatusType
+     * @return mixed Status of the OrderDetail reponse
+     * @see  ResponseStatusType
      *
-     * @return Status of the OrderDetail reponse
      */
     public function getStatus()
     {
@@ -90,9 +91,9 @@ class IncidentOrderDetailUpdate extends Entity
 
     /**
      *
-     * @see  FnacApiClient\Entity\Error
+     * @return array|ArrayObject<Error>
+     * @see  \FnacApiClient\Entity\Error
      *
-     * @return ArrayObject<Error>
      */
     public function getErrors()
     {

@@ -128,6 +128,27 @@ class IncidentCloseStatusType extends AbstractType
     const SELLER_SAV = 22;
 
     protected static $validType = array(
-        self::ITEM_RESEND_TO_THE_SELLER, self::REFUND_BY_CHECK, self::SELLER_AGGREEMENT, self::RECEIVED_ITEM, self::GOOT_ITEM, self::ITEM_NOT_RECEIVED, self::ITEM_FAULTY, self::ITEM_UNLIKE_DESCRIPTION, self::CLIENT_DONT_ANSWER, self::REFUND, self::OTHERS, self::SOLUCE_FNAC, self::NO_ANSWER, self::NO_NEWS, self::NO_STOCK, self::RETURNED_ITEM, self::CANCELED_ITEM, self::IMPOSSIBLE_SEND, self::RETRACTATION, self::COUNTREFEIT, self::LONGER_PERIOD, self::SELLER_SAV
+        self::ITEM_RESEND_TO_THE_SELLER,
+        self::REFUND_BY_CHECK,
+        self::SELLER_AGGREEMENT,
+        self::RECEIVED_ITEM,
+        self::GOOD_ITEM,
+        self::ITEM_NOT_RECEIVED,
+        self::ITEM_FAULTY,
+        self::ITEM_UNLIKE_DESCRIPTION,
+        self::CLIENT_DONT_ANSWER,
+        self::REFUND,
+        self::OTHERS,
+        self::FNAC_AGGREEMENT,
+        self::NO_ANSWER,
+        self::NO_NEWS,
+        self::NO_STOCK,
+        self::RETURNED_ITEM,
+        self::CANCELED_ITEM,
+        self::IMPOSSIBLE_SEND,
+        self::RETRACTATION,
+        self::COUNTREFEIT,
+        self::LONGER_PERIOD,
+        self::SELLER_SAV,
     );
 }

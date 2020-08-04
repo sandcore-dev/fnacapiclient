@@ -11,7 +11,6 @@ namespace FnacApiClient\Entity;
 
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * RankedOffer definition.
@@ -19,7 +18,6 @@ use Symfony\Component\Serializer\SerializerInterface;
  * @author     Fnac
  * @version    1.0.0
  */
-
 class RankedOffer extends Entity
 {
     private $seller_name;
@@ -38,13 +36,14 @@ class RankedOffer extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
 
     }
 
     /**
      * {@inheritDoc}
+     * @noinspection PhpUnusedParameterInspection
      */
     public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
     {
@@ -76,7 +75,7 @@ class RankedOffer extends Entity
     /**
      * Product seller type
      *
-     * @see FnacApiClient\Type\SellerType
+     * @see SellerType
      *
      * @return string
      */
@@ -138,7 +137,7 @@ class RankedOffer extends Entity
     /**
      * Product state type for this pricing
      *
-     * @see FnacApiClient\Type\ProductStateType
+     * @see ProductStateType
      *
      * @return integer
      */
@@ -180,7 +179,7 @@ class RankedOffer extends Entity
     /**
      * Last update date
      *
-     * @return datetime
+     * @return string
      */
     public function getUpdatedAt()
     {

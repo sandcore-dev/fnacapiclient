@@ -6,8 +6,10 @@
 * For the full copyright and license information, please view the LICENSE
 * file that was distributed with this source code.
 */
+
 namespace FnacApiClient\Service\Request;
 
+use FnacApiClient\Service\Response\Token;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -32,10 +34,9 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class Authentification extends RequestService
 {
-
     const XSD_FILE = "AuthenticationService.xsd";
     const ROOT_NAME = "auth";
-    const CLASS_RESPONSE = "FnacApiClient\Service\Response\Token";
+    const CLASS_RESPONSE = Token::class;
 
     private $partnerId = 0;
     private $shopId = 0;
@@ -47,6 +48,7 @@ class Authentification extends RequestService
      * @param string $partnerId : The partner Uid
      * @param string $shopId : The shop uid
      * @param string $key : The password key
+     * @noinspection PhpMissingParentConstructorInspection
      */
     public function __construct($shopId, $partnerId, $key)
     {
@@ -88,11 +90,11 @@ class Authentification extends RequestService
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
     {
         return array_merge(parent::normalize($normalizer, $format), array(
             'shop_id' => $this->getShopId(), 'partner_id' => $this->getPartnerId(), 'key' => $this->getApiKey()
         ));
     }
-    
+
 }
