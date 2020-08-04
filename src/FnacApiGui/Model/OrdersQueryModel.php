@@ -17,102 +17,93 @@
 
 namespace FnacApiGui\Model;
 
+use FnacApiClient\Client\SimpleClient;
 use FnacApiClient\Entity\Order;
 
+use FnacApiClient\Exception\ErrorResponseException;
 use FnacApiClient\Service\Request\OrderQuery;
 use FnacApiClient\Service\Request\OrderUpdate;
-
 use FnacApiClient\Entity\OrderDetail;
-
-use FnacApiClient\Type\OrderStateType;
+use FnacApiClient\Service\Response\ResponseService;
 use FnacApiClient\Type\OrderDetailActionType;
 use FnacApiClient\Type\OrderActionType;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 class OrdersQueryModel extends Model
 {
-
-  public function __construct() {
-
-    $this->template = __DIR__ ."/../templates/orders_query.tpl.php";
-
-    parent::__construct();
-  }
-
-  /**
-   * Retrieves Orders query response
-   *
-   * @param SimpleClient $client
-   * @param array $options Request parameters
-   * @return ResponseService
-   */
-  public function retrieveOrdersResponse($client, $options = array())
-  {
-    $defaults = array(
-        'page' => 1,
-        'results_per_page' => 10,
-        'states' => null,
-        'sort_by_type' => 'DESC',
-        'date_type' => 'CreatedAt'
-    );
-    $options = array_merge($defaults, $options);
-    extract($options);
-
-    $orderQuery = new OrderQuery();
-
-    $orderQuery->setPaging($page);
-    $orderQuery->setResultsCount($results_per_page);
-    if(isset($states))
+    public function __construct()
     {
-      $orderQuery->setStates($states);
+        $this->template = __DIR__ . "/../templates/orders_query.tpl.php";
     }
 
-    $orderQueryResponse = $client->callService($orderQuery);
-
-    return $orderQueryResponse;
-  }
-
-  /**
-   * Update an order with a given action
-   *
-   * CAUTION : This method updates all the orders details of an order by using "mass actions" (accept_all_orders, confirm_all_to_send).
-   *
-   * @param SimpleClient $client
-   * @param string $action
-   * @param string $order_id
-   * @return ResponseService
-   */
-  public function updateOrder($client, $action, $order_id)
-  {
-
-    $order = new Order();
-    $order->setOrderId($order_id);
-    $order->setOrderAction(OrderActionType::ACCEPT_ALL_ORDERS);
-
-    $orderDetail = new OrderDetail();
-
-    if ($action == 'accept')
+    /**
+     * Retrieves Orders query response
+     *
+     * @param SimpleClient $client
+     * @param array $options Request parameters
+     * @return ResponseService
+     * @throws ErrorResponseException
+     * @throws ExceptionInterface
+     */
+    public function retrieveOrdersResponse($client, $options = array())
     {
-      $orderDetail->setAction(OrderDetailActionType::ACCEPTED);
-    }
-    elseif($action == 'refuse')
-    {
-      $orderDetail->setAction(OrderDetailActionType::REFUSED);
-    }
-    elseif($action == 'ship')
-    {
-      $order->setOrderAction(OrderActionType::CONFIRM_ALL_TO_SEND);
-      $orderDetail->setAction(OrderDetailActionType::SHIPPED);
+        $defaults = array(
+            'page' => 1,
+            'results_per_page' => 10,
+            'states' => null,
+            'sort_by_type' => 'DESC',
+            'date_type' => 'CreatedAt'
+        );
+        $options = array_merge($defaults, $options);
+
+        $orderQuery = new OrderQuery();
+
+        $orderQuery->setPaging($options['page']);
+        $orderQuery->setResultsCount($options['results_per_page']);
+        if (isset($states)) {
+            $orderQuery->setStates($states);
+        }
+
+        return $client->callService($orderQuery);
     }
 
-    $order->addOrderDetail($orderDetail);
+    /**
+     * Update an order with a given action
+     *
+     * CAUTION : This method updates all the orders details of an order by using "mass actions" (accept_all_orders, confirm_all_to_send).
+     *
+     * @param SimpleClient $client
+     * @param string $action
+     * @param string $order_id
+     * @return ResponseService
+     * @throws ErrorResponseException
+     * @throws ExceptionInterface
+     */
+    public function updateOrder($client, $action, $order_id)
+    {
 
-    $orderUpdateService = new OrderUpdate();
-    $orderUpdateService->addOrder($order);
+        $order = new Order();
+        $order->setOrderId($order_id);
+        $order->setOrderAction(OrderActionType::ACCEPT_ALL_ORDERS);
 
-    $orderUpdateResponse = $client->callService($orderUpdateService);
+        $orderDetail = new OrderDetail();
 
-    return $orderUpdateResponse;
-  }
+        if ($action == 'accept') {
+            $orderDetail->setAction(OrderDetailActionType::ACCEPTED);
+        } elseif ($action == 'refuse') {
+            $orderDetail->setAction(OrderDetailActionType::REFUSED);
+        } elseif ($action == 'ship') {
+            $order->setOrderAction(OrderActionType::CONFIRM_ALL_TO_SEND);
+            $orderDetail->setAction(OrderDetailActionType::SHIPPED);
+        }
+
+        $order->addOrderDetail($orderDetail);
+
+        $orderUpdateService = new OrderUpdate();
+        $orderUpdateService->addOrder($order);
+
+        return $client->callService($orderUpdateService);
+    }
 
 }
 

@@ -17,6 +17,9 @@
 
 namespace FnacApiGui\Controller;
 
+use Exception;
+use FnacApiClient\Client\SimpleClient;
+use FnacApiGui\Model\Model;
 use FnacApiGui\Model\OffersQueryModel;
 use FnacApiGui\Model\OrdersQueryModel;
 use FnacApiGui\Model\IncidentsQueryModel;
@@ -24,69 +27,65 @@ use FnacApiGui\Model\BatchQueryModel;
 
 class HomeController extends Controller
 {
-  /**
-   * Constructor.
-   *
-   * @param Model $model $model model class to use to manage wanted data
-   * @param SimpleClient $client instanciated client to call services
-   *
-   */
-  public function __construct($model, $client = null)
-  {
-    parent::__construct($model, $client);
-  }
-
-  /**
-   * Checks connection to the API status
-   *
-   * @return null
-   */
-  public function checkConnection()
-  {
-    try
+    /**
+     * Constructor.
+     *
+     * @param Model $model $model model class to use to manage wanted data
+     * @param SimpleClient|null $client instanciated client to call services
+     */
+    public function __construct($model, $client = null)
     {
-      $this->client->checkAuth();
-      $token = $this->client->getToken()->getToken();
-    }
-    catch(\Exception $e)
-    {
-      $token = null;
+        parent::__construct($model, $client);
     }
 
-    return $token;
-  }
+    /**
+     * Checks connection to the API status
+     *
+     * @return null
+     */
+    public function checkConnection()
+    {
+        try {
+            $this->client->checkAuth();
+            $token = $this->client->getToken()->getToken();
+        } catch (Exception $e) {
+            $token = null;
+        }
 
-  /**
-   * Loads all required data to display on homepage
-   */
-  public function loadHomeData()
-  {
-    $results = array();
+        return $token;
+    }
 
-    // Retrieve number of active offers
-    $offerQuery = new OffersQueryModel();
-    $offerQueryResponse = $offerQuery->retrieveOffersResponse($this->client, array('page' => 1, 'results_per_page' => 1));
-    $results['nb_offers'] = $offerQueryResponse->getNbTotalResult();
+    /**
+     * Loads all required data to display on homepage
+     */
+    public function loadHomeData()
+    {
+        $results = array();
 
-    // Retrieve orders stats
-    $newOrdersQuery = new OrdersQueryModel();
-    $newOrdersQueryResponse = $newOrdersQuery->retrieveOrdersResponse($this->client, array('page' => 1, 'results_per_page' => 1, 'states' => array('Created')));
-    $results['nb_new_orders'] = $newOrdersQueryResponse->getNbTotalResult();
+        // Retrieve number of active offers
+        $offerQuery = new OffersQueryModel();
+        $offerQueryResponse = $offerQuery->retrieveOffersResponse($this->client, array('page' => 1, 'results_per_page' => 1));
+        $results['nb_offers'] = $offerQueryResponse->getNbTotalResult();
 
-    $toShipOrdersQuery = new OrdersQueryModel();
-    $toShipOrdersResponse = $toShipOrdersQuery->retrieveOrdersResponse($this->client, array('page' => 1, 'results_per_page' => 1, 'states' => array('ToShip')));
-    $results['nb_orders_to_ship'] = $toShipOrdersResponse->getNbTotalResult();
+        // Retrieve orders stats
+        $newOrdersQuery = new OrdersQueryModel();
+        $newOrdersQueryResponse = $newOrdersQuery->retrieveOrdersResponse($this->client, array('page' => 1, 'results_per_page' => 1, 'states' => array('Created')));
+        $results['nb_new_orders'] = $newOrdersQueryResponse->getNbTotalResult();
 
-    $openedIncidents = new IncidentsQueryModel();
-    $openedIncidentsResponse = $openedIncidents->retrieveIncidentsResponse($this->client, array('status' => 'OPENED'));
-    $results['nb_opened_incidents'] = count($openedIncidentsResponse->getIncidents());
+        $toShipOrdersQuery = new OrdersQueryModel();
+        $toShipOrdersResponse = $toShipOrdersQuery->retrieveOrdersResponse($this->client, array('page' => 1, 'results_per_page' => 1, 'states' => array('ToShip')));
+        $results['nb_orders_to_ship'] = $toShipOrdersResponse->getNbTotalResult();
 
-    $batchQuery = new BatchQueryModel();
-    $batchQueryResponse = $batchQuery->retrieveBatchResponse($this->client);
-    $results['nb_enqueued_batches'] = $batchQueryResponse->getNbBatchRunning() + $batchQueryResponse->getNbBatchActive();
+        $openedIncidents = new IncidentsQueryModel();
+        $openedIncidentsResponse = $openedIncidents->retrieveIncidentsResponse($this->client, array('status' => 'OPENED'));
+        $results['nb_opened_incidents'] = count($openedIncidentsResponse->getIncidents());
 
-    $this->data = $results;
+        $batchQuery = new BatchQueryModel();
+        $batchQueryResponse = $batchQuery->retrieveBatchResponse($this->client);
+        $results['nb_enqueued_batches'] = $batchQueryResponse->getNbBatchRunning() + $batchQueryResponse->getNbBatchActive();
 
-  }
+        $this->data = $results;
+
+    }
 
 }

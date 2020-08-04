@@ -18,13 +18,16 @@
 namespace FnacApiGui\Controller;
 
 
+use FnacApiClient\Client\SimpleClient;
+use FnacApiGui\Model\Model;
+
 class ShopInvoicesController extends Controller
 {
   /**
    * Constructor.
    *
    * @param Model $model model class to use to manage wanted data
-   * @param SimpleClient $client instanciated client to call services
+   * @param SimpleClient|null $client instantiated client to call services
    *
    */
   public function __construct($model, $client = null)

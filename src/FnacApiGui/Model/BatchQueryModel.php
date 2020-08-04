@@ -17,73 +17,71 @@
 
 namespace FnacApiGui\Model;
 
-// Load required classes
-use FnacApiClient\Entity\Batch;
+use FnacApiClient\Client\SimpleClient;
+use FnacApiClient\Exception\ErrorResponseException;
 use FnacApiClient\Service\Request\BatchQuery;
 use FnacApiClient\Service\Request\BatchStatus;
+use FnacApiClient\Service\Response\ResponseService;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 class BatchQueryModel extends Model
 {
 
-  public function __construct()
-  {
-    $this->template = __DIR__ ."/../templates/batch_query.tpl.php"; // Set default template
+    public function __construct()
+    {
+        $this->template = __DIR__ . "/../templates/batch_query.tpl.php"; // Set default template
+    }
 
-    parent::__construct();
-  }
+    /**
+     * Retrieves Batch query response
+     *
+     * @param SimpleClient $client
+     * @return ResponseService
+     */
+    public function retrieveBatchResponse($client)
+    {
+        $batchQuery = new BatchQuery();
 
-  /**
-   * Retrieves Batch query response
-   *
-   * @param SimpleClient $client
-   * @return ResponseService
-   */
-  public function retrieveBatchResponse($client)
-  {
-    $batchQuery = new BatchQuery();
+        return $client->callService($batchQuery);
+    }
 
-    $batchQueryResponse = $client->callService($batchQuery);
+    /**
+     * Retrieves Batch query response for recent batches
+     *
+     * @param SimpleClient $client
+     * @param int $delay : nb days to retrieve
+     * @return ResponseService
+     * @throws ErrorResponseException
+     * @throws ExceptionInterface
+     */
+    public function retrieveRecentBatchResponse($client, $delay)
+    {
+        $batchQuery = new BatchQuery();
 
-    return $batchQueryResponse;
-  }
+        $date = date_create();
+        $max_date = date_format($date, "Y-m-d\TH:i:s+02:00");
+        $min_date = date_sub($date, date_interval_create_from_date_string("$delay days"));
+        $min_date = date_format($min_date, "Y-m-d\TH:i:s+02:00");
+        $batchQuery->setDate(array('type' => 'Created', 'min' => $min_date, 'max' => $max_date));
 
-  /**
-   * Retrieves Batch query response for recent batches
-   *
-   * @param SimpleClient $client
-   * @param int $delay : nb days to retrieve
-   * @return ResponseService
-   */
-  public function retrieveRecentBatchResponse($client, $delay)
-  {
-    $batchQuery = new BatchQuery();
+        return $client->callService($batchQuery);
+    }
 
-    $date = date_create();
-    $max_date = date_format($date, "Y-m-d\TH:i:s+02:00");
-    $min_date = date_sub($date, date_interval_create_from_date_string("$delay days"));
-    $min_date = date_format($min_date,"Y-m-d\TH:i:s+02:00");
-    $batchQuery->setDate(array('type' => 'Created', 'min' => $min_date, 'max' => $max_date));
+    /**
+     * Retrieves Batch status response
+     *
+     * @param SimpleClient $client
+     * @param string $batch_id
+     * @return ResponseService
+     * @throws ErrorResponseException
+     * @throws ExceptionInterface
+     */
+    public function retrieveBatchStatus($client, $batch_id)
+    {
+        $batchStatusQuery = new BatchStatus();
+        $batchStatusQuery->setBatchId($batch_id);
 
-    $batchQueryResponse = $client->callService($batchQuery);
-
-    return $batchQueryResponse;
-  }
-
-  /**
-   * Retrieves Batch status response
-   *
-   * @param SimpleClient $client
-   * @param string $batch_id
-   * @return ResponseService
-   */
-  public function retrieveBatchStatus($client, $batch_id)
-  {
-    $batchStatusQuery = new BatchStatus();
-    $batchStatusQuery->setBatchId($batch_id);
-
-    $batchStatusQueryResponse = $client->callService($batchStatusQuery);
-
-    return $batchStatusQueryResponse;
-  }
+        return $client->callService($batchStatusQuery);
+    }
 }
 

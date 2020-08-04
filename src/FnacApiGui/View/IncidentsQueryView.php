@@ -17,38 +17,43 @@
 
 namespace FnacApiGui\View;
 
+use FnacApiGui\Controller\Controller;
+use FnacApiGui\Model\Model;
 
 class IncidentsQueryView extends View
 {
-  /**
-   * Constructor.
-   *
-   * @param Controller $controller controller to use for the view
-   * @param Model $model $model model class to use to retrieve wanted data
-   *
-   */
-  public function __construct($controller, $model)
-  {
-    parent::__construct($controller, $model);
-  }
+    /**
+     * Constructor.
+     *
+     * @param Controller $controller controller to use for the view
+     * @param Model $model $model model class to use to retrieve wanted data
+     *
+     */
+    public function __construct($controller, $model)
+    {
+        parent::__construct($controller, $model);
+    }
 
-  /***
-   * Retrieves data and display them into a dedicated template
-   */
-  public function output($options = array())
-  {
-    $xml_update_request = null;   // Plain XML update request sent to the service, for education or debugging purpose
-    $xml_update_response = null;  // Plain XML response received from the updating service, for education or debugging purpose
+    /***
+     * Retrieves data and display them into a dedicated template
+     * @param array $options
+     * @noinspection PhpUnusedLocalVariableInspection
+     */
+    public function output($options = array())
+    {
+        $xml_update_request = null;   // Plain XML update request sent to the service, for education or debugging purpose
+        $xml_update_response = null;  // Plain XML response received from the updating service, for education or debugging purpose
 
-    // Retrieve data with controller
-    $data = $this->controller->getData($options);
+        // Retrieve data with controller
+        $data = $this->controller->getData($options);
 
-    $incidents = $data->getIncidents();
+        $incidents = $data->getIncidents();
 
-    $xml_request = self::xml_highlight($this->controller->getRequest(), true); // Plain XML request sent to the service, for education or debugging purpose
-    $xml_response = self::xml_highlight($this->controller->getResponse());     // Plain XML response received from the service, for education or debugging purpose
+        $xml_request = self::xml_highlight($this->controller->getRequest(), true); // Plain XML request sent to the service, for education or debugging purpose
+        $xml_response = self::xml_highlight($this->controller->getResponse());     // Plain XML response received from the service, for education or debugging purpose
 
-    require_once($this->model->template);
-  }
+        /** @noinspection PhpIncludeInspection */
+        require_once $this->model->template;
+    }
 
 }

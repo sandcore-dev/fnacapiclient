@@ -17,57 +17,53 @@
 
 namespace FnacApiGui\Model;
 
-use FnacApiClient\Entity\Pricing;
-use FnacApiClient\Entity\PricingProduct;
+use FnacApiClient\Client\SimpleClient;
 use FnacApiClient\Entity\ProductReference;
-
+use FnacApiClient\Exception\ErrorResponseException;
 use FnacApiClient\Service\Request\PricingQuery;
-
-use FnacApiClient\Type\ProductStateType;
-use FnacApiClient\Type\ProductType;
+use FnacApiClient\Service\Response\ResponseService;
 use FnacApiClient\Type\SellerType;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 class PricingQueryModel extends Model
 {
 
-  public function __construct() {
+    public function __construct()
+    {
+        $this->template = __DIR__ . "/../templates/pricing_query.tpl.php";
+    }
 
-    $this->template = __DIR__ ."/../templates/pricing_query.tpl.php";
+    /**
+     * Retrieves Orders query response
+     *
+     * @param SimpleClient $client
+     * @param array $options Request parameters
+     * @return ResponseService
+     * @throws ErrorResponseException
+     * @throws ExceptionInterface
+     */
+    public function retrievePricingResponse($client, $options = array())
+    {
+        $defaults = array(
+            'seller_type' => SellerType::ALL,
+        );
+        $options = array_merge($defaults, $options);
 
-    parent::__construct();
-  }
+        //Create a product reference
+        $productRef = new ProductReference();
+        $productRef->setType($options['product_type']);
+        $productRef->setValue($options['product_reference']);
 
-  /**
-   * Retrieves Orders query response
-   *
-   * @param SimpleClient $client
-   * @param array $options Request parameters
-   * @return ResponseService
-   */
-  public function retrievePricingResponse($client, $options = array())
-  {
-    $defaults = array(
-        'seller_type' => SellerType::ALL
-    );
-    $options = array_merge($defaults, $options);
-    extract($options);
+        $pricingQuery = new PricingQuery();
+        $pricingQuery->setSellers($options['seller_type']);
+        $pricingQuery->addProductReference($productRef);
 
-    
-    //Create a product reference
-    $productRef = new ProductReference();
-    $productRef->setType($product_type);    
-    $productRef->setValue($product_reference);
+        $pricingQueryResponse = $client->callService($pricingQuery);
 
-    $pricingQuery = new PricingQuery();    
-    $pricingQuery->setSellers($seller_type);
-    $pricingQuery->addProductReference($productRef);
-    
-    $pricingQueryResponse = $client->callService($pricingQuery);
+        $pricing_options = array();
 
-    $pricing_options = array();
-    
-    return $pricingQueryResponse->getPricingProducts($pricing_options);
-  }
+        return $pricingQueryResponse->getPricingProducts($pricing_options);
+    }
 
 }
 

@@ -18,50 +18,53 @@
 namespace FnacApiGui\Controller;
 
 
+use FnacApiClient\Client\SimpleClient;
+use FnacApiGui\Model\Model;
+
 class BatchController extends Controller
 {
 
-  const DELAY_RECENT_BATCHES = 2; // retrieve batches of the last DELAY_RECENT_BATCHES days
+    const DELAY_RECENT_BATCHES = 2; // retrieve batches of the last DELAY_RECENT_BATCHES days
 
-  /**
-   * Constructor.
-   *
-   * @param Model $model $model model class to use to manage wanted data
-   * @param SimpleClient $client instanciated client to call services
-   *
-   */
-  public function __construct($model, $client = null)
-  {
-    parent::__construct($model, $client);
-  }
+    /**
+     * Constructor.
+     *
+     * @param Model $model $model model class to use to manage wanted data
+     * @param SimpleClient|null $client instanciated client to call services
+     */
+    public function __construct($model, $client = null)
+    {
+        parent::__construct($model, $client);
+    }
 
-  /**
-   * Loads data BatchQuery data in controller object
-   */
-  public function loadBatchQueryData()
-  {
-    $this->data = $this->model->retrieveBatchResponse($this->client);
+    /**
+     * Loads data BatchQuery data in controller object
+     */
+    public function loadBatchQueryData()
+    {
+        $this->data = $this->model->retrieveBatchResponse($this->client);
 
-    $this->loadXmlData();
-  }
+        $this->loadXmlData();
+    }
 
-  /**
-   * Loads data BatchQuery data in controller object
-   */
-  public function loadRecentBatchQueryData()
-  {
-    $this->data = $this->model->retrieveRecentBatchResponse($this->client, self::DELAY_RECENT_BATCHES);
+    /**
+     * Loads data BatchQuery data in controller object
+     */
+    public function loadRecentBatchQueryData()
+    {
+        $this->data = $this->model->retrieveRecentBatchResponse($this->client, self::DELAY_RECENT_BATCHES);
 
-    $this->loadXmlData();
-  }
+        $this->loadXmlData();
+    }
 
-  /**
-   * Loads data BatchStatus data in controller object
-   */
-  public function loadBatchStatusData($batch_id)
-  {
-    $this->data = $this->model->retrieveBatchStatus($this->client, $batch_id);
+    /**
+     * Loads data BatchStatus data in controller object
+     * @param $batch_id
+     */
+    public function loadBatchStatusData($batch_id)
+    {
+        $this->data = $this->model->retrieveBatchStatus($this->client, $batch_id);
 
-    $this->loadXmlData();
-  }
+        $this->loadXmlData();
+    }
 }

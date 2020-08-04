@@ -18,44 +18,43 @@
 namespace FnacApiGui\Model;
 
 // Load required classes
-use FnacApiClient\Entity\ShopInvoice;
+use FnacApiClient\Client\SimpleClient;
+use FnacApiClient\Exception\ErrorResponseException;
 use FnacApiClient\Service\Request\ShopInvoiceQuery;
+use FnacApiClient\Service\Response\ResponseService;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 class ShopInvoicesQueryModel extends Model
 {
+    public function __construct()
+    {
+        $this->template = __DIR__ . "/../templates/shop_invoices_query.tpl.php"; // Set default template
+    }
 
-  public function __construct()
-  {
-    $this->template = __DIR__ ."/../templates/shop_invoices_query.tpl.php"; // Set default template
+    /**
+     * Retrieves Shop Invoice query response
+     *
+     * @param SimpleClient $client
+     * @param array $options
+     * @return ResponseService
+     * @throws ErrorResponseException
+     * @throws ExceptionInterface
+     */
+    public function retrieveShopInvoicesResponse($client, $options = array())
+    {
+        $defaults = array(
+            'page' => 1,
+            'results_per_page' => 10,
+        );
+        $options = array_merge($defaults, $options);
 
-    parent::__construct();
-  }
+        $shopInvoiceQuery = new ShopInvoiceQuery();
 
-  /**
-   * Retrieves Shop Invoice query response
-   *
-   * @param SimpleClient $client
-   * @return ResponseService
-   */
-  public function retrieveShopInvoicesResponse($client, $options = array())
-  {
-    $defaults = array(
-        'page' => 1,
-        'results_per_page' => 10,
-    );
-    
-    $options = array_merge($defaults, $options);
-    extract($options);
+        $shopInvoiceQuery->setPaging($options['page']);
+        $shopInvoiceQuery->setResultsCount($options['results_per_page']);
 
-    $shopInvoiceQuery = new ShopInvoiceQuery();
-    
-    $shopInvoiceQuery->setPaging($page);
-    $shopInvoiceQuery->setResultsCount($results_per_page);
-    
-    $shopInvoiceQueryResponse = $client->callService($shopInvoiceQuery);
-
-    return $shopInvoiceQueryResponse;
-  }
+        return $client->callService($shopInvoiceQuery);
+    }
 
 }
 

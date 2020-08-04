@@ -18,50 +18,52 @@
 namespace FnacApiGui\View;
 
 
+use FnacApiGui\Controller\Controller;
+use FnacApiGui\Model\Model;
+
 class BatchQueryView extends View
 {
-  /**
-   * Constructor.
-   *
-   * @param Controller $controller controller to use for the view
-   * @param Model $model $model model class to use to retrieve wanted data
-   *
-   */
-  public function __construct($controller, $model)
-  {
-    parent::__construct($controller, $model);
-  }
-
-  /***
-   * Retrieves data and display them into a dedicated template
-   */
-  public function output()
-  {
-    $data = $this->controller->getData();
-
-    // Display batch details of a given batch_id (BatchStatus response)
-    if(isset($_GET['batch_id']))
+    /**
+     * Constructor.
+     *
+     * @param Controller $controller controller to use for the view
+     * @param Model $model $model model class to use to retrieve wanted data
+     *
+     */
+    public function __construct($controller, $model)
     {
-      $batch_id = $data->getBatchId();
-      $status = $data->getStatus();
-
-      $offers = $data->getOffersUpdate();
-      $errors = $data->getErrors();
-
-      $this->model->setTemplate(__DIR__ . "/../templates/batch_status.tpl.php");
-    }
-    // Display currently running or enqueued (active) batches (BatchQuery response)
-    else
-    {
-      $nb_active_batches = $data->getNbBatchActive();
-      $nb_running_batches = $data->getNbBatchRunning();
-
-      $batches = $data->getBatchs();
+        parent::__construct($controller, $model);
     }
 
-    $xml_request = self::xml_highlight($this->controller->getRequest(), true);
-    $xml_response = self::xml_highlight($this->controller->getResponse());
+    /***
+     * Retrieves data and display them into a dedicated template
+     * @noinspection PhpUnusedLocalVariableInspection
+     */
+    public function output()
+    {
+        $data = $this->controller->getData();
 
-    require_once($this->model->template);
-  }
+        // Display batch details of a given batch_id (BatchStatus response)
+        if (isset($_GET['batch_id'])) {
+            $batch_id = $data->getBatchId();
+            $status = $data->getStatus();
+
+            $offers = $data->getOffersUpdate();
+            $errors = $data->getErrors();
+
+            $this->model->setTemplate(__DIR__ . "/../templates/batch_status.tpl.php");
+        } // Display currently running or enqueued (active) batches (BatchQuery response)
+        else {
+            $nb_active_batches = $data->getNbBatchActive();
+            $nb_running_batches = $data->getNbBatchRunning();
+
+            $batches = $data->getBatchs();
+        }
+
+        $xml_request = self::xml_highlight($this->controller->getRequest(), true);
+        $xml_response = self::xml_highlight($this->controller->getResponse());
+
+        /** @noinspection PhpIncludeInspection */
+        require_once $this->model->template;
+    }
 }

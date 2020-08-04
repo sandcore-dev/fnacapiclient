@@ -7,12 +7,8 @@ class Model
     public $tstring;
     public $template;
 
-    public function __construct(){
-
+    public function setTemplate($template)
+    {
+        $this->template = $template;
     }
-    
-    public function setTemplate($template) {
-      $this->template = $template;
-    }
-
 }

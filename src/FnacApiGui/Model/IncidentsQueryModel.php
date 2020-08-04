@@ -17,46 +17,44 @@
 
 namespace FnacApiGui\Model;
 
-// Load required classes
-use FnacApiClient\Entity\Incident;
+use FnacApiClient\Client\SimpleClient;
+use FnacApiClient\Exception\ErrorResponseException;
 use FnacApiClient\Service\Request\IncidentQuery;
+use FnacApiClient\Service\Response\ResponseService;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 class IncidentsQueryModel extends Model
 {
-
-  public function __construct()
-  {
-    $this->template = __DIR__ ."/../templates/incidents_query.tpl.php"; // Set default template
-
-    parent::__construct();
-  }
-
-  /**
-   * Retrieves Incident query response
-   *
-   * @param SimpleClient $client
-   * @return ResponseService
-   */
-  public function retrieveIncidentsResponse($client, $options = array())
-  {
-    $defaults = array(
-        'status' => null,
-        'sort_by' => 'DESC'
-    );
-    $options = array_merge($defaults, $options);
-    extract($options);
-
-    $incidentQuery = new IncidentQuery();
-    $incidentQuery->setSortBy($sort_by);
-    if (isset($status))
+    public function __construct()
     {
-      $incidentQuery->setStatus($status);
+        $this->template = __DIR__ . "/../templates/incidents_query.tpl.php"; // Set default template
     }
 
-    $incidentQueryResponse = $client->callService($incidentQuery);
+    /**
+     * Retrieves Incident query response
+     *
+     * @param SimpleClient $client
+     * @param array $options
+     * @return ResponseService
+     * @throws ErrorResponseException
+     * @throws ExceptionInterface
+     */
+    public function retrieveIncidentsResponse($client, $options = array())
+    {
+        $defaults = array(
+            'status' => null,
+            'sort_by' => 'DESC'
+        );
+        $options = array_merge($defaults, $options);
 
-    return $incidentQueryResponse;
-  }
+        $incidentQuery = new IncidentQuery();
+        $incidentQuery->setSortBy($options['sort_by']);
+        if (isset($status)) {
+            $incidentQuery->setStatus($status);
+        }
+
+        return $client->callService($incidentQuery);
+    }
 
 }
 

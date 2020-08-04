@@ -18,28 +18,34 @@
 namespace FnacApiGui\View;
 
 
+use FnacApiGui\Controller\Controller;
+use FnacApiGui\Model\Model;
+
 class PricingQueryView extends View
 {
-  /**
-   * Constructor.
-   *
-   * @param Controller $controller controller to use for the view
-   * @param Model $model $model model class to use to retrieve wanted data
-   *
-   */
-  public function __construct($controller, $model)
-  {
-    parent::__construct($controller, $model);
-  }
+    /**
+     * Constructor.
+     *
+     * @param Controller $controller controller to use for the view
+     * @param Model $model $model model class to use to retrieve wanted data
+     *
+     */
+    public function __construct($controller, $model)
+    {
+        parent::__construct($controller, $model);
+    }
 
-  /***
-   * Retrieves data and display them into a dedicated template
-   */
-  public function output($options)
-  {
-    $data = $this->controller->data;
+    /***
+     * Retrieves data and display them into a dedicated template
+     * @param $options
+     * @noinspection PhpUnusedLocalVariableInspection
+     * @noinspection PhpUnusedParameterInspection
+     */
+    public function output($options)
+    {
+        $data = $this->controller->data;
 
-    require_once($this->model->template);
-
-  }
+        /** @noinspection PhpIncludeInspection */
+        require_once $this->model->template;
+    }
 }
