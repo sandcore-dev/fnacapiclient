@@ -4,20 +4,19 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.4 | ^8.0",
         "ext-dom": "*",
         "ext-xsl": "*",
         "ext-libxml": "*",
         "ext-simplexml": "*",
-        "monolog/monolog" : "^2.0",
-        "symfony/class-loader": "^3.4",
-        "symfony/finder" : "^5.1",
+        "monolog/monolog": "^2.0",
+        "symfony/finder": "^5.1",
         "symfony/http-foundation": "^5.1",
         "symfony/serializer": "^5.1",
-        "symfony/yaml" : "^5.1",
-        "zendframework/zend-http" : "^2.11",
-        "zendframework/zend-uri" : "^2.7",
-        "zendframework/zend-validator" : "^2.13"
+        "symfony/yaml": "^5.1",
+        "laminas/laminas-http": "^2.11",
+        "laminas/laminas-uri": "^2.7",
+        "laminas/laminas-validator": "^2.13"
     },
     "autoload": {
         "psr-4": {
@@ -27,7 +26,12 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "v2.x-dev"
+            "dev-master": "v4.x-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "laminas/laminas-dependency-plugin": true
         }
     }
 }

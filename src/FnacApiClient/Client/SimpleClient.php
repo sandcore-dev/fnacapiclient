@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
-use Zend\Http\Client as ZendClient;
+use Laminas\Http\Client as LaminasClient;
 
 /**
  * SimpleClient connect to Fnac REST WebServices using default object and configuration.
@@ -61,7 +61,7 @@ class SimpleClient extends Client
 
         $serializer = new Serializer(array(new CustomNormalizer()), array(new XmlEncoder()));
 
-        $zendClient = new ZendClient();
+        $zendClient = new LaminasClient();
 
         parent::__construct($serializer, $zendClient);
     }

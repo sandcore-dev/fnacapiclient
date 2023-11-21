@@ -18,8 +18,8 @@ use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
-use Zend\Http\Client as ZendClient;
-use Zend\Http\Client\Adapter\Curl;
+use Laminas\Http\Client as LaminasClient;
+use Laminas\Http\Client\Adapter\Curl;
 
 /**
  * Client connect to Fnac API Services.
@@ -45,7 +45,7 @@ class Client
     /**
      * Client to communicate with a REST WebService
      *
-     * @var ZendClient
+     * @var LaminasClient
      */
     private $streamClient = null;
 
@@ -81,10 +81,10 @@ class Client
      * Create a new Client
      *
      * @param Serializer $serializer
-     * @param ZendClient $streamClient : A client to send and receive from a rest webservice
+     * @param LaminasClient $streamClient : A client to send and receive from a rest webservice
      * @param Logger|null $logger : A logger to log request and response, useful for debugging
      */
-    public function __construct(Serializer $serializer, ZendClient $streamClient, Logger $logger = null)
+    public function __construct(Serializer $serializer, LaminasClient $streamClient, Logger $logger = null)
     {
         $this->streamClient = $streamClient;
         $this->serializer = $serializer;
