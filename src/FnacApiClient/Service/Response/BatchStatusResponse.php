@@ -11,7 +11,7 @@ namespace FnacApiClient\Service\Response;
 
 use ArrayObject;
 use FnacApiClient\Entity\Error;
-use FnacApiClient\Service\Request\OfferUpdate;
+use FnacApiClient\Entity\OfferUpdate;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 /**
