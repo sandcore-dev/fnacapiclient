@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -41,7 +42,7 @@ class Carrier extends Entity
     {
         $this->name = $data['name'];
         $this->code = $data['@code'];
-        $this->is_global = (boolean) $data['@global'];
+        $this->is_global = (bool) $data['@global'];
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the FnacApiClient.
  * (c) 2011 Fnac
@@ -37,7 +38,6 @@ use Laminas\Http\Client as LaminasClient;
  */
 class SimpleClient extends Client
 {
-
     private $shop_id;
     private $partner_id;
     private $key;
@@ -114,6 +114,7 @@ class SimpleClient extends Client
 
             return parent::callService($service);
         } catch (Exception $e) {
+            /** @noinspection PhpUnhandledExceptionInspection */
             throw $e;
         }
     }
@@ -165,5 +166,4 @@ class SimpleClient extends Client
     {
         return $this->token;
     }
-
 }

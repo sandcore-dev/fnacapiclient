@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2017 Fnac
@@ -49,11 +50,11 @@ class Promotion extends Entity
     ): array|string|int|float|bool|\ArrayObject|null {
         $data['@type'] = $this->promotion_type;
 
-        if(!is_null($this->sales_period_reference)) {
+        if (!is_null($this->sales_period_reference)) {
             $data['sales_period_reference'] = $this->sales_period_reference;
         }
 
-        if(!is_null($this->promotion_uid)) {
+        if (!is_null($this->promotion_uid)) {
              $data['promotion_uid'] = $this->promotion_uid;
         }
 
@@ -68,19 +69,18 @@ class Promotion extends Entity
             $data['discount_value'] = $this->discount_value;
         }
 
-        if(!is_null($this->trigger_cart)) {
-
+        if (!is_null($this->trigger_cart)) {
             $data['triggers'] = array();
 
             $data['triggers']['trigger_cart'] = array(
                 '@type' => $this->trigger_cart_type, '#' => $this->trigger_cart
              );
 
-            if($this->trigger_promotion_code) {
+            if ($this->trigger_promotion_code) {
                 $data['triggers']['trigger_promotion_code'] = $this->trigger_promotion_code;
             }
 
-            if($this->trigger_customer_type) {
+            if ($this->trigger_customer_type) {
                 $data['triggers']['trigger_customer_type'] = $this->trigger_customer_type;
             }
         }

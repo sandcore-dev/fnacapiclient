@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace API Client.
  * (c) 2017 Fnac
@@ -21,19 +22,19 @@ class PricingProductStateType extends AbstractType
      * All states
      */
     const ALL = "all";
-    
+
     /**
      * Product has never been used
      */
     const NEW_PRODUCT = "new";
-    
+
     /**
      * Refurbished product
      */
     const REFURBISHED = "refurbished";
 
     /**
-     * Used product, looks like new 
+     * Used product, looks like new
      */
     const USED_AS_NEW = "used-as-new";
 

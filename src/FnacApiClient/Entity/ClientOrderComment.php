@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -56,10 +57,10 @@ class ClientOrderComment extends Entity
         $this->client_name = $data['client_name'];
         $this->comment = $data['comment'];
         $this->reply = $data['reply'];
-        $this->is_received = (boolean) $data['is_received'];
-        $this->is_fast = (boolean) $data['is_fast'];
-        $this->is_well_packed = (boolean) $data['is_well_packed'];
-        $this->is_good_shape = (boolean) $data['is_good_shape'];
+        $this->is_received = (bool) $data['is_received'];
+        $this->is_fast = (bool) $data['is_fast'];
+        $this->is_well_packed = (bool) $data['is_well_packed'];
+        $this->is_good_shape = (bool) $data['is_good_shape'];
         $this->created_at = $data['created_at'];
     }
 

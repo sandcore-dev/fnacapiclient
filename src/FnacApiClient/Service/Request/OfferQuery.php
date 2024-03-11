@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -152,7 +153,7 @@ class OfferQuery extends Query
             );
         }
 
-        if(!is_null($this->with_fees)) {
+        if (!is_null($this->with_fees)) {
             $query['@with_fees'] = $this->with_fees;
         }
 

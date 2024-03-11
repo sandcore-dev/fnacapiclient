@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the FnacApiClient.
  * (c) 2011 Fnac
@@ -63,7 +64,7 @@ class StringObject
      */
     public static function prettyXml($xml)
     {
-        $dom = new DomDocument;
+        $dom = new DomDocument();
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
 
@@ -73,5 +74,4 @@ class StringObject
 
         return $dom->saveXML();
     }
-
 }

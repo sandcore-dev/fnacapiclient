@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacApi.
  * (c) 2011 Fnac
@@ -84,6 +85,6 @@ abstract class QueryResponse extends ResponseService
      */
     public function hasNextPage()
     {
-        return (boolean) ($this->page < $this->total_paging);
+        return (bool) ($this->page < $this->total_paging);
     }
 }

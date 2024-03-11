@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -64,5 +65,4 @@ class IncidentOrderDetail extends Entity
     {
         $this->refund_reason = $refund_reason;
     }
-
 }

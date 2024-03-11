@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -75,7 +76,6 @@ class PricingProduct extends Entity
 
         // using Fnac Marketplace pricing service V1
         if (isset($data['pricing'])) {
-
             $this->product_name = $data['product_name'];
             $this->image_url = $data['image_url'];
 
@@ -92,10 +92,9 @@ class PricingProduct extends Entity
                 $tmpObj->denormalize($denormalizer, $data['pricing'], $format);
                 $this->pricings[] = $tmpObj;
             }
-
         }
         // using Fnac Marketplace pricing service V3 - PricesQuery service
-        elseif(isset($data['standard'])) {
+        elseif (isset($data['standard'])) {
             $this->product_ean = isset($data['product_ean']) ? $data['product_ean'] : "";
             $this->product_name = $data['product_name'];
             $this->image_url = $data['product_url'];
@@ -109,8 +108,7 @@ class PricingProduct extends Entity
             $this->adherent_pricing = $tmpObj;
         }
         // using Fnac Marketplace pricing service V2
-        else
-        {
+        else {
             $this->seller_price = isset($data['seller_price']) ? $data['seller_price'] : "";
             $this->seller_shipping = isset($data['seller_shipping']) ? $data['seller_shipping'] : "";
             $this->seller_offer_sku = isset($data['seller_offer_sku']) ? $data['seller_offer_sku'] : "";
@@ -205,7 +203,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getSellerPrice() {
+    public function getSellerPrice()
+    {
         return $this->seller_price;
     }
 
@@ -215,7 +214,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getSellerShipping() {
+    public function getSellerShipping()
+    {
         return $this->seller_shipping;
     }
 
@@ -225,7 +225,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getSellerOfferSku() {
+    public function getSellerOfferSku()
+    {
         return $this->seller_offer_sku;
     }
 
@@ -235,7 +236,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getSellerOfferState() {
+    public function getSellerOfferState()
+    {
         return $this->seller_offer_state;
     }
 
@@ -245,7 +247,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getSellerAdherentPrice() {
+    public function getSellerAdherentPrice()
+    {
         return $this->seller_adherent_price;
     }
 
@@ -255,7 +258,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getSellerAdherentShipping() {
+    public function getSellerAdherentShipping()
+    {
         return $this->seller_adherent_shipping;
     }
 
@@ -265,7 +269,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getSellerAdherentOfferState() {
+    public function getSellerAdherentOfferState()
+    {
         return $this->seller_adherent_offer_state;
     }
 
@@ -275,7 +280,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getSellerAdherentOfferSku() {
+    public function getSellerAdherentOfferSku()
+    {
         return $this->seller_adherent_offer_sku;
     }
 
@@ -285,7 +291,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getNewPrice() {
+    public function getNewPrice()
+    {
         return $this->new_price;
     }
 
@@ -295,7 +302,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getNewShipping() {
+    public function getNewShipping()
+    {
         return $this->new_shipping;
     }
 
@@ -305,7 +313,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getRefurbishedPrice() {
+    public function getRefurbishedPrice()
+    {
         return $this->refurbished_price;
     }
 
@@ -315,7 +324,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getRefurbishedShipping() {
+    public function getRefurbishedShipping()
+    {
         return $this->refurbished_shipping;
     }
 
@@ -325,7 +335,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getUsedPrice() {
+    public function getUsedPrice()
+    {
         return $this->used_price;
     }
 
@@ -335,7 +346,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getUsedShipping() {
+    public function getUsedShipping()
+    {
         return $this->used_shipping;
     }
 
@@ -345,7 +357,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getNewAdherentPrice() {
+    public function getNewAdherentPrice()
+    {
         return $this->new_adherent_price;
     }
 
@@ -355,7 +368,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getNewAdherentShipping() {
+    public function getNewAdherentShipping()
+    {
         return $this->new_adherent_shipping;
     }
 
@@ -365,7 +379,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getRefurbishedAdherentPrice() {
+    public function getRefurbishedAdherentPrice()
+    {
         return $this->refurbished_adherent_price;
     }
 
@@ -375,7 +390,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getRefurbishedAdherentShipping() {
+    public function getRefurbishedAdherentShipping()
+    {
         return $this->refurbished_adherent_shipping;
     }
 
@@ -385,7 +401,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getUsedAdherentPrice() {
+    public function getUsedAdherentPrice()
+    {
         return $this->used_adherent_price;
     }
 
@@ -395,7 +412,8 @@ class PricingProduct extends Entity
      *
      * @return float
      */
-    public function getUsedAdherentShipping() {
+    public function getUsedAdherentShipping()
+    {
         return $this->used_adherent_shipping;
     }
 
@@ -404,7 +422,8 @@ class PricingProduct extends Entity
      *
      * @return string
      */
-    public function getProductEan() {
+    public function getProductEan()
+    {
         return $this->product_ean;
     }
 
@@ -413,7 +432,8 @@ class PricingProduct extends Entity
      *
      * @return array
      */
-    public function getStandardPricing() {
+    public function getStandardPricing()
+    {
         return $this->standard_pricing;
     }
 
@@ -422,7 +442,8 @@ class PricingProduct extends Entity
      *
      * @return array
      */
-    public function getAdherentPricing() {
+    public function getAdherentPricing()
+    {
         return $this->adherent_pricing;
     }
 }

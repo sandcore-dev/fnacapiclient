@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacApi.
  * (c) 2011 Fnac
@@ -12,7 +13,6 @@ namespace FnacApiClient\Service\Response;
 use ArrayObject;
 use FnacApiClient\Entity\ShopInvoice;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-
 
 /**
  * BatchQueryResponse service base definition for batch query response
@@ -30,10 +30,10 @@ class ShopInvoiceQueryResponse extends QueryResponse
     public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = array())
     {
         parent::denormalize($denormalizer, $data, $format);
-        
+
         $this->shop_invoices = new ArrayObject();
-        
-        if(!empty($data['shop_invoice'])) {
+
+        if (!empty($data['shop_invoice'])) {
             foreach ($data['shop_invoice'] as $shop_invoice) {
                 $shopInvoiceObj = new ShopInvoice();
                 $shopInvoiceObj->denormalize($denormalizer, $shop_invoice, $format);

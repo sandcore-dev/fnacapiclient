@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -61,7 +62,6 @@ class OrderQuery extends Query
         }
 
         if (!is_null($this->orders_fnac_id)) {
-            $data['orders_fnac_id'] = $this->orders_fnac_id;
             $data['orders_fnac_id'] = array();
             $data['orders_fnac_id']['order_fnac_id'] = array();
             foreach ($this->orders_fnac_id as $order_fnac_id) {

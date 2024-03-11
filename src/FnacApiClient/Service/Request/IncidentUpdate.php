@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -12,7 +13,6 @@ namespace FnacApiClient\Service\Request;
 use ArrayObject;
 use FnacApiClient\Service\Response\IncidentUpdateResponse;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
 use FnacApiClient\Entity\IncidentOrder;
 
 /**
@@ -21,14 +21,13 @@ use FnacApiClient\Entity\IncidentOrder;
  * @author     Fnac
  * @version    1.0.0
  */
-
 class IncidentUpdate extends Authentified
 {
     const ROOT_NAME = "incidents_update";
     const XSD_FILE = "IncidentsUpdateService.xsd";
     const CLASS_RESPONSE = IncidentUpdateResponse::class;
 
-    private $orders = array();
+    private $orders = [];
 
     /**
      * {@inheritdoc}
@@ -50,7 +49,7 @@ class IncidentUpdate extends Authentified
     ): array|string|int|float|bool|\ArrayObject|null {
         $data = parent::normalize($normalizer, $format);
 
-        $data['order'] = array();
+        $data['order'] = [];
 
         if ($this->orders->count() > 1) {
             foreach ($this->orders as $order) {
@@ -80,7 +79,6 @@ class IncidentUpdate extends Authentified
      */
     public function addOrders(ArrayObject $orders)
     {
-        $this->orders = array_merge($this->orders, $orders);
+        $this->orders = array_merge((array)$this->orders, $orders->getArrayCopy());
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace.
 * (c) 2011 Fnac
@@ -99,5 +100,4 @@ class Authentification extends RequestService
             'shop_id' => $this->getShopId(), 'partner_id' => $this->getPartnerId(), 'key' => $this->getApiKey()
         ));
     }
-
 }

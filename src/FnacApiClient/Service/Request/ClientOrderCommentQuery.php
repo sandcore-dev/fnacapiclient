@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -21,7 +22,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class ClientOrderCommentQuery extends Query
 {
-
     const ROOT_NAME = "client_order_comments_query";
     const XSD_FILE = "ClientOrderCommentsQueryService.xsd";
     const CLASS_RESPONSE = ClientOrderCommentQueryResponse::class;

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -22,7 +23,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class IncidentOrder extends Entity
 {
-
     /** Get Var **/
     private $incident_id;
     private $order_id;
@@ -138,7 +138,7 @@ class IncidentOrder extends Entity
     public function addOrderDetails(ArrayObject $order_details)
     {
         if (is_array($this->orders_details_incident)) {
-            $this->orders_details_incident = array_merge($this->orders_details_incident, $order_details);
+            $this->orders_details_incident = array_merge($this->orders_details_incident, $order_details->getArrayCopy());
         } else {
             $this->orders_details_incident = $order_details;
         }

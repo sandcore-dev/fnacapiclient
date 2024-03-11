@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -154,5 +155,4 @@ class IncidentQuery extends Query
     {
         $this->incidents_id = $incidents_id;
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace API Client.
  * (c) 2017 Fnac
@@ -17,11 +18,10 @@ namespace FnacApiClient\Type;
  */
 class DiscountType extends AbstractType
 {
-
     const PERCENTAGE = "percentage";
     const FIXED = "fixed";
-   
-    
+
+
     protected static $validType = array(
         self::PERCENTAGE,
         self::FIXED

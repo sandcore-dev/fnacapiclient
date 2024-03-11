@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpUnusedPrivateFieldInspection */
+<?php
+
+/** @noinspection PhpUnusedPrivateFieldInspection */
 
 /*
  * This file is part of the fnacMarketPlace APi Client.
@@ -150,7 +152,7 @@ class Order extends Entity
         $this->created_at = $data['created_at'];
         //$this->created_at = $data['accepted_at'];
         $this->fees = (float) $data['fees'];
-        $this->nb_messages = (integer) $data['nb_messages'];
+        $this->nb_messages = (int) $data['nb_messages'];
         $this->delivery_note = isset($data['delivery_note']) ? $data['delivery_note'] : "";
         $this->shipping_address = new Address();
         $this->shipping_address->denormalize($denormalizer, $data['shipping_address'], $format);

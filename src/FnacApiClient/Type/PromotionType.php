@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2017 Fnac
@@ -17,7 +18,6 @@ namespace FnacApiClient\Type;
  */
 class PromotionType extends AbstractType
 {
-
     const SALES = "Sales";
     const DESTOCKING = "Destocking";
     const GOODDEAL = "GoodDeal";

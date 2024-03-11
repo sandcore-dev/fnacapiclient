@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -12,7 +13,6 @@ namespace FnacApiClient\Service\Request;
 use ArrayObject;
 use FnacApiClient\Service\Response\MessageUpdateResponse;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
 use FnacApiClient\Entity\Message;
 
 /**

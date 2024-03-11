@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacApi.
  * (c) 2011 Fnac
@@ -10,7 +11,6 @@
 namespace FnacApiClient\Service\Response;
 
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-
 
 /**
  * Token service base definition for response when using authentification.
@@ -29,8 +29,7 @@ class Token extends ResponseService
     public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = array())
     {
         parent::denormalize($denormalizer, $data, $format);
-        if(isset($data['token']))
-        {
+        if (isset($data['token'])) {
             $this->token = $data['token'];
             $this->validity = strtotime($data['validity']);
         }
@@ -64,11 +63,11 @@ class Token extends ResponseService
     public function isValid()
     {
         $local_time_zone = date_default_timezone_get();
-        
+
         ini_set("date.timezone", "UTC"); // force timezone to UTC for token validity to be timezone independent
         $isValid = (bool) (time() < $this->getValidity());
         ini_set("date.timezone", $local_time_zone);
-        
+
         return $isValid;
     }
 }

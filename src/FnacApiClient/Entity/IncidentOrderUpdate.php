@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -22,7 +23,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class IncidentOrderUpdate extends Entity
 {
-
     /** Get Var **/
     private $status;
     private $incident_id;
@@ -96,7 +96,6 @@ class IncidentOrderUpdate extends Entity
                 $this->order_details[] = $tmpObj;
             }
         }
-
     }
 
     /**

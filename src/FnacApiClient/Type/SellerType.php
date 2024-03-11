@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -28,16 +29,16 @@ class SellerType extends AbstractType
     const OTHERS = "others";
 
     /**
-     * All professional sellers only, including your account 
+     * All professional sellers only, including your account
      */
     const ALL_PRO = "all-pro";
 
     /**
-     * All professional sellers only, excluding your account 
+     * All professional sellers only, excluding your account
      */
     const OTHERS_PRO = "others-pro";
-    
-    
+
+
     protected static $validType = array(
         self::ALL,
         self::OTHERS,

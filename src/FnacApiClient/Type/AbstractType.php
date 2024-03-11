@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -27,6 +28,6 @@ abstract class AbstractType
      */
     public static function isValid($type)
     {
-        return (boolean) (in_array($type, static::$validType));
+        return (bool) (in_array($type, static::$validType));
     }
 }

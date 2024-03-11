@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace API Client.
  * (c) 2017 Fnac
@@ -21,18 +22,18 @@ class PriceType extends AbstractType
      * All price types
      */
     const ALL = "all";
-    
+
     /**
      * Standard price, excluding Adhérents' (Fnac members) price
      */
     const STANDARD = "standard";
-    
+
     /**
      * Adhérents' (Fnac members) only price type
      */
     const ADHERENT = "adherent";
 
-    
+
     protected static $validType = array(
         self::ALL,
         self::STANDARD,

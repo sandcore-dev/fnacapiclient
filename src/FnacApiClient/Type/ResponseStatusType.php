@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -46,4 +47,3 @@ class ResponseStatusType extends AbstractType
         self::RUNNING, self::OK, self::WARNING, self::ERROR, self::FATAL
     );
 }
-

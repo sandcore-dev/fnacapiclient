@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacApi.
  * (c) 2011 Fnac

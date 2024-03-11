@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -46,7 +47,7 @@ class MessageActionType extends AbstractType
      * Create a message
      */
     const CREATE = "create";
-    
+
     protected static $validType = array(
         self::MARK_AS_READ, self::MARK_AS_UNREAD, self::MARK_AS_READ_AND_ARCHIVE, self::ARCHIVE, self::REPLY, self::CREATE
     );

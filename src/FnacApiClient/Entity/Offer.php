@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -12,7 +13,6 @@ namespace FnacApiClient\Entity;
 use FnacApiClient\Type\ProductType;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
 
 /**
  * Offer definition.
@@ -140,9 +140,8 @@ class Offer extends Entity
         $this->offer_seller_id = $data['offer_seller_id'];
         $this->product_state = (int) $data['product_state'];
         $this->price = (float) $data['price'];
-        if(isset($data['adherent_price']))
-        {
-          $this->adherent_price = (float) $data['adherent_price'];
+        if (isset($data['adherent_price'])) {
+            $this->adherent_price = (float) $data['adherent_price'];
         }
         $this->quantity = (int) $data['quantity'];
         $this->description = $data['description'];
@@ -150,23 +149,20 @@ class Offer extends Entity
         $this->product_url = $data['product_url'];
         $this->image = $data['image'];
         $this->nb_messages = $data['nb_messages'];
-        $this->showcase = (integer) $data['showcase'];
+        $this->showcase = (int) $data['showcase'];
 
         $this->offer_reference = $this->offer_fnac_id;
         $this->offer_reference_type = ProductType::ITEM_ID;
 
-        if(isset($data['fee_excluding_taxes']))
-        {
+        if (isset($data['fee_excluding_taxes'])) {
             $this->fee_excluding_taxes = (float) $data['fee_excluding_taxes'];
         }
 
-        if(isset($data['fee_including_all_taxes']))
-        {
+        if (isset($data['fee_including_all_taxes'])) {
             $this->fee_including_all_taxes = (float) $data['fee_including_all_taxes'];
         }
 
-        if(isset($data['promotion']))
-        {
+        if (isset($data['promotion'])) {
             $tmpObj = new Promotion();
             $tmpObj->denormalize($denormalizer, $data['promotion'], $format);
             $this->promotion = $tmpObj;

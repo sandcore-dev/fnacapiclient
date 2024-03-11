@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -19,7 +20,6 @@ namespace FnacApiClient\Type;
  */
 class IncidentRefundReasonType extends AbstractType
 {
-
     /**
      * @var string Other reason that listed below
      */

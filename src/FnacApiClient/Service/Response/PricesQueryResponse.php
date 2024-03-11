@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacApi.
  * (c) 2017 Fnac
@@ -29,18 +30,17 @@ class PricesQueryResponse extends ResponseService
     public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = array())
     {
         parent::denormalize($denormalizer, $data, $format);
-        
+
         $this->pricing_products = new ArrayObject();
 
-        if (isset($data['pricing_products'])) {            
+        if (isset($data['pricing_products'])) {
             $prices_array = $data['pricing_products']['pricing_product'];
-            
-            if(isset($prices_array['product_reference'])) {
+
+            if (isset($prices_array['product_reference'])) {
                 $tmpObj = new PricingProduct();
                 $tmpObj->denormalize($denormalizer, $prices_array, $format);
                 $this->pricing_products[] = $tmpObj;
-            }
-            else {
+            } else {
                 foreach ($prices_array as $pricing_product) {
                     $tmpObj = new PricingProduct();
                     $tmpObj->denormalize($denormalizer, $pricing_product, $format);

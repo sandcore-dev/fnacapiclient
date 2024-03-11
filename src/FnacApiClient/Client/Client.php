@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the FnacApiClient.
  * (c) 2011 Fnac
@@ -193,7 +194,7 @@ class Client
         $classResponse = $service->getClassResponse();
         $this->log(sprintf(" Service Response Class  : %s", $classResponse), Logger::DEBUG);
 
-        if (preg_match("/PricesQueryResponse$/", $classResponse)) {
+        if (str_ends_with($classResponse, "PricesQueryResponse")) {
             $response_body = preg_replace('/(<\?xml[^?]+?)utf-16/i', '$1utf-8', $response->getBody());
         } else {
             $response_body = $response->getBody();

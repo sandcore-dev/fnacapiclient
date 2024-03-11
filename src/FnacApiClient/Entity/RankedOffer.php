@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace API Client.
  * (c) 2017 Fnac
@@ -55,7 +56,6 @@ class RankedOffer extends Entity
         $this->seller_url = $data['seller_url'];
         $this->seller_sales_number = $data['seller_sales_number'];
         $this->seller_reliability_rate = $data['seller_reliability_rate'];
-        $this->seller_expedition_country = $data['seller_expedition_country'];
         $this->seller_expedition_country = $data['seller_expedition_country'];
         $this->has_buy_box = $data['has_buy_box'];
         $this->offer_status = $data['offer_status'];

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -85,5 +86,4 @@ class StandardPricing extends Entity
     {
         return $this->ranked_offers;
     }
-
 }

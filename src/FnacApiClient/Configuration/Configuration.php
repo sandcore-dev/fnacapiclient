@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacApi.
  * (c) 2011 Fnac
@@ -24,9 +25,9 @@ use FnacApiClient\Exception\FileNotFoundException;
  */
 class Configuration implements ArrayAccess
 {
-    CONST CLIENT_CONFIG = 'fnac_api_client';
-    CONST HTTP_CLIENT = 'fnac_http_client';
-    CONST SERVICE_CONFIG = 'fnac_api_services';
+    const CLIENT_CONFIG = 'fnac_api_client';
+    const HTTP_CLIENT = 'fnac_http_client';
+    const SERVICE_CONFIG = 'fnac_api_services';
 
     /**
      * Configuration path
@@ -84,7 +85,6 @@ class Configuration implements ArrayAccess
         if (empty($config_client) || empty($config_client['key']) || empty($config_client['shop_id']) || empty($config_client['partner_id']) || empty($config_client['host'])) {
             throw new LogicException(sprintf("The file at %s does not contain any configuration element, please check your file.", $config_path));
         }
-
     }
 
     /**

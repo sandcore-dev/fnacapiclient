@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -102,5 +103,4 @@ class IncidentOrderDetailUpdate extends Entity
     {
         return $this->errors;
     }
-
 }

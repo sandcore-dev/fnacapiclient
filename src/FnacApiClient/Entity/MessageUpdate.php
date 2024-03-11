@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the fnacMarketPlace APi Client.
  * (c) 2011 Fnac
@@ -22,7 +23,6 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class MessageUpdate extends Entity
 {
-
     /** Get Var **/
     private $status;
     private $errors;
