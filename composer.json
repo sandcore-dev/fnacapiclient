@@ -4,16 +4,16 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": "^7.4 | ^8.0",
+        "php": "^8.0",
         "ext-dom": "*",
         "ext-xsl": "*",
         "ext-libxml": "*",
         "ext-simplexml": "*",
         "monolog/monolog": "^2.0",
-        "symfony/finder": "^5.1",
-        "symfony/http-foundation": "^5.1",
-        "symfony/serializer": "^5.1",
-        "symfony/yaml": "^5.1",
+        "symfony/finder": "^6.4",
+        "symfony/http-foundation": "^6.4",
+        "symfony/serializer": "^6.4",
+        "symfony/yaml": "^6.4",
         "laminas/laminas-http": "^2.11",
         "laminas/laminas-uri": "^2.7",
         "laminas/laminas-validator": "^2.13"
@@ -26,7 +26,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "v4.x-dev"
+            "dev-master": "v5.x-dev"
         }
     },
     "config": {
