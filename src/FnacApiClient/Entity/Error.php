@@ -27,9 +27,12 @@ class Error extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
-    {
-
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
+        return null;
     }
 
     /**

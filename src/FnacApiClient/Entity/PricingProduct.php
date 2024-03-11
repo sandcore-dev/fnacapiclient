@@ -48,7 +48,7 @@ class PricingProduct extends Entity
     private $refurbished_adherent_shipping;
     private $used_adherent_price;
     private $used_adherent_shipping;
-    
+
     private $product_ean;
     private $standard_pricing;
     private $adherent_pricing;
@@ -56,9 +56,12 @@ class PricingProduct extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
-    {
-
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
+        return null;
     }
 
     /**
@@ -69,7 +72,7 @@ class PricingProduct extends Entity
     {
         $this->product_reference = new ProductReference();
         $this->product_reference->denormalize($denormalizer, $data['product_reference'], $format);
-        
+
         // using Fnac Marketplace pricing service V1
         if (isset($data['pricing'])) {
 
@@ -77,7 +80,7 @@ class PricingProduct extends Entity
             $this->image_url = $data['image_url'];
 
             $this->pricings = new ArrayObject();
-        
+
             if (isset($data['pricing'][0])) {
                 foreach ($data['pricing'] as $pricing) {
                     $tmpObj = new Pricing();
@@ -142,7 +145,7 @@ class PricingProduct extends Entity
     {
         return $this->product_reference->getType();
     }
-    
+
     /**
      * Pricing product reference value
      *
@@ -174,7 +177,7 @@ class PricingProduct extends Entity
     {
         return $this->image_url;
     }
-    
+
     /**
      * Returns product state
      *
@@ -184,7 +187,7 @@ class PricingProduct extends Entity
     {
         return $this->offer_status;
     }
-    
+
     /**
      * Product pricing list
      *
@@ -398,7 +401,7 @@ class PricingProduct extends Entity
 
     /**
      * Product's EAN
-     * 
+     *
      * @return string
      */
     public function getProductEan() {
@@ -407,7 +410,7 @@ class PricingProduct extends Entity
 
     /**
      * Get competitors standard prices (non Fnac members prices)
-     * 
+     *
      * @return array
      */
     public function getStandardPricing() {
@@ -416,7 +419,7 @@ class PricingProduct extends Entity
 
     /**
      * Get competitors "adherent" prices (Fnac members prices)
-     * 
+     *
      * @return array
      */
     public function getAdherentPricing() {

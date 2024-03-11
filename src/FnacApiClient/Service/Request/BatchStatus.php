@@ -30,8 +30,11 @@ class BatchStatus extends Authentified
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
-    {
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
         return array_merge(parent::normalize($normalizer, $format), array(
             'batch_id' => $this->batch_id
         ));

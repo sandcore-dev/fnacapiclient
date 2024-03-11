@@ -43,7 +43,7 @@ class Offer extends Entity
 
     /** Both **/
     private $product_state;
-    private $price;    
+    private $price;
     private $adherent_price;
     private $quantity;
     private $description;
@@ -51,7 +51,7 @@ class Offer extends Entity
     private $showcase;
     private $promotion;
 
-    const STATE_NEW             = 11;    
+    const STATE_NEW             = 11;
     const STATE_USED_AS_NEW     = 1;
     const STATE_USED_VERY_GOOD  = 2;
     const STATE_USED_GOOD       = 3;
@@ -66,12 +66,15 @@ class Offer extends Entity
         self::STATE_USED_CORRECT    => "Used, correct state",
         self::STATE_REFURBISHED     => "Refurbished"
     );
-    
+
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
-    {
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
         $data = array();
 
         if (!is_null($this->product_reference)) {
@@ -89,7 +92,7 @@ class Offer extends Entity
         if (!is_null($this->price)) {
             $data['price'] = $this->price;
         }
-        
+
         if (!is_null($this->adherent_price)) {
             $data['adherent_price'] = $this->adherent_price;
         }
@@ -121,7 +124,7 @@ class Offer extends Entity
         if (!is_null($this->promotion)) {
             $data['promotion'] = $this->promotion;
         }
-        
+
         return $data;
     }
 
@@ -139,7 +142,7 @@ class Offer extends Entity
         $this->price = (float) $data['price'];
         if(isset($data['adherent_price']))
         {
-          $this->adherent_price = (float) $data['adherent_price'];          
+          $this->adherent_price = (float) $data['adherent_price'];
         }
         $this->quantity = (int) $data['quantity'];
         $this->description = $data['description'];
@@ -151,12 +154,12 @@ class Offer extends Entity
 
         $this->offer_reference = $this->offer_fnac_id;
         $this->offer_reference_type = ProductType::ITEM_ID;
-        
+
         if(isset($data['fee_excluding_taxes']))
         {
             $this->fee_excluding_taxes = (float) $data['fee_excluding_taxes'];
         }
-        
+
         if(isset($data['fee_including_all_taxes']))
         {
             $this->fee_including_all_taxes = (float) $data['fee_including_all_taxes'];
@@ -223,7 +226,7 @@ class Offer extends Entity
     {
         $this->price = $price;
     }
-    
+
     /**
      * Set offer's "adherent" price
      *
@@ -399,7 +402,7 @@ class Offer extends Entity
     {
         return self::$product_state_names[$this->product_state];
     }
-    
+
     /**
      * Product price for this offer
      *
@@ -419,7 +422,7 @@ class Offer extends Entity
     {
         return $this->adherent_price;
     }
-    
+
     /**
      * Product's quantity in offer
      *

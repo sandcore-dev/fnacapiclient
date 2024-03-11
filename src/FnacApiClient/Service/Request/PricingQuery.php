@@ -43,8 +43,11 @@ class PricingQuery extends Authentified
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
-    {
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
         $data = parent::normalize($normalizer, $format);
 
         if (!is_null($this->sellers)) {

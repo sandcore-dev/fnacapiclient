@@ -27,13 +27,20 @@ abstract class ResponseService extends AbstractService
     /**
      * {@inheritdoc}
      */
-    final public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
-    {
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
         throw new BadMethodCallException("Can't normalize a Response Service");
     }
 
-    public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = array())
-    {
+    public function denormalize(
+        DenormalizerInterface $denormalizer,
+        float|array|bool|int|string $data,
+        ?string $format = null,
+        array $context = []
+    ) {
         $this->status = $data['@status'];
     }
 

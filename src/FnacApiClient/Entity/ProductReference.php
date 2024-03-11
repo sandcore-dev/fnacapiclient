@@ -27,8 +27,11 @@ class ProductReference extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
-    {
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
         return array(
             '@type' => $this->type, '#' => $this->value
         );
@@ -65,7 +68,7 @@ class ProductReference extends Entity
     {
         $this->value = $value;
     }
-    
+
     /**
      * Get product reference type
      *

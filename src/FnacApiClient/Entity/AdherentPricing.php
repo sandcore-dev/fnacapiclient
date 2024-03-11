@@ -28,9 +28,12 @@ class AdherentPricing extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
-    {
-
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
+        return null;
     }
 
     /**
@@ -41,9 +44,9 @@ class AdherentPricing extends Entity
     {
         $this->seller_offer_price = isset($data['seller_offer']['price']) ? $data['seller_offer']['price'] : "";
         $this->seller_offer_shipping_price = isset($data['seller_offer']['shipping_price']) ? $data['seller_offer']['shipping_price'] : "";
-        
+
         $this->ranked_offers = new ArrayObject();
-        
+
         if (isset($data['ranked_offers'][0])) {
             foreach ($data['ranked_offers'] as $ranked_offer) {
                 $tmpObj = new RankedOffer();
@@ -76,7 +79,7 @@ class AdherentPricing extends Entity
     {
         return $this->seller_offer_shipping_price;
     }
-    
+
     public function getRankedOffers()
     {
         return $this->ranked_offers;

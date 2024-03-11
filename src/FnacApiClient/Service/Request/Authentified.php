@@ -100,8 +100,11 @@ abstract class Authentified extends RequestService
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
-    {
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
         return array_merge(parent::normalize($normalizer, $format), array(
             '@shop_id' => $this->getShopId(), '@partner_id' => $this->getPartnerId(), '@token' => $this->getToken()
         ));

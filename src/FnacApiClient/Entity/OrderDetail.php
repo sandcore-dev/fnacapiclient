@@ -52,12 +52,15 @@ class OrderDetail extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
-    {
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
         $data = array(
             'action' => $this->action
         );
-        
+
         if (!is_null($this->order_detail_id)) {
             $data['order_detail_id'] = $this->order_detail_id;
         }
@@ -184,7 +187,7 @@ class OrderDetail extends Entity
     {
         return $this->product_state;
     }
-    
+
     /**
      * Product state label
      *

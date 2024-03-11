@@ -35,16 +35,19 @@ class Address extends Entity
     /**
      * @inheritDoc
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
-    {
-
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
+        return null;
     }
 
     /**
      * @inheritDoc
      * @noinspection PhpUnusedParameterInspection
      */
-    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = array())
+    public function denormalize(DenormalizerInterface $denormalizer, $data, $format = null, array $context = [])
     {
         $this->firstname = $data['firstname'];
         $this->lastname = $data['lastname'];

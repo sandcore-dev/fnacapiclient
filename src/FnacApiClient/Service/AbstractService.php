@@ -36,13 +36,20 @@ abstract class AbstractService implements NormalizableInterface, DenormalizableI
      */
     const ROOT_NAME = null;
 
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
-    {
-        // TODO: Implement normalize() method.
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
+        return null;
     }
 
-    public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = array())
-    {
+    public function denormalize(
+        DenormalizerInterface $denormalizer,
+        float|int|bool|array|string $data,
+        ?string $format = null,
+        array $context = []
+    ) {
         // TODO: Implement denormalize() method.
     }
 
@@ -54,16 +61,16 @@ abstract class AbstractService implements NormalizableInterface, DenormalizableI
      * @return string
      */
     final public function getServiceName()
-    {        
+    {
         if (static::ROOT_NAME === null) {
             throw new LogicException(sprintf("Constant root name must be defined in class %s", get_class($this)));
         }
         return static::ROOT_NAME;
     }
-    
-    
-    final public function getClassName() {
-        
+
+
+    final public function getClassName()
+    {
         $reflexion = new ReflectionClass($this);
         return $reflexion->getShortName();
     }

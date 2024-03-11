@@ -26,8 +26,11 @@ class IncidentOrderDetail extends Entity
     /**
      * {@inheritDoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
-    {
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
         $data = array();
         $data['order_detail_id'] = $this->order_detail_id;
         $data['refund_reason'] = $this->refund_reason;

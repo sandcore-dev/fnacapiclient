@@ -25,9 +25,12 @@ class Carrier extends Entity
     private $code;
     private $is_global;
 
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])
-    {
-        //
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
+        return null;
     }
 
     /**

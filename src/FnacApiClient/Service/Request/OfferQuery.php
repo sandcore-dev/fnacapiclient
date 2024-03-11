@@ -112,7 +112,7 @@ class OfferQuery extends Query
     {
         $this->with_fees = $with_fees;
     }
-    
+
     /**
      * {@inheritdoc}
      * @noinspection PhpMissingParentConstructorInspection
@@ -127,8 +127,11 @@ class OfferQuery extends Query
     /**
      * {@inheritdoc}
      */
-    public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = array())
-    {
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = []
+    ): array|string|int|float|bool|\ArrayObject|null {
         $query = parent::normalize($normalizer, $format);
 
         if (!is_null($this->offer_fnac_id)) {
