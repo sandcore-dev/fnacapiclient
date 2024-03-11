@@ -20,8 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "FnacApiClient\\": "src/FnacApiClient/",
-            "FnacApiGui\\": "src/FnacApiGui/"
+            "FnacApiClient\\": "src/FnacApiClient/"
         }
     },
     "extra": {
