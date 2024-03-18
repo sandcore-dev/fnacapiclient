@@ -9,7 +9,7 @@
         "ext-xsl": "*",
         "ext-libxml": "*",
         "ext-simplexml": "*",
-        "monolog/monolog": "^2.0",
+        "monolog/monolog": "^2.0 | ^3.0",
         "symfony/finder": "^6.4",
         "symfony/http-foundation": "^6.4",
         "symfony/serializer": "^6.4",
@@ -25,7 +25,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "v5.x-dev"
+            "dev-master": "v5.1.x-dev"
         }
     },
     "config": {
