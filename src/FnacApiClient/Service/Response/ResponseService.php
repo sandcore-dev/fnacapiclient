@@ -23,7 +23,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 abstract class ResponseService extends AbstractService
 {
-    private $status = null;
+    private ?string $status = null;
 
     /**
      * {@inheritdoc}
@@ -42,17 +42,15 @@ abstract class ResponseService extends AbstractService
         ?string $format = null,
         array $context = []
     ) {
-        $this->status = $data['@status'];
+        $this->status = $data['@status'] ?? null;
     }
 
     /**
      * Return the status of response
      *
      * @see ResponseStatusType
-     *
-     * @return string
      */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
